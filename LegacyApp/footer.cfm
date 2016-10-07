@@ -13,7 +13,7 @@
         </div>
     </footer>
 
-    <script src="#application.settings.webroot#assets/js/jquery-2.2.2.min.js"></script>
-    <script src="#application.settings.webroot#assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery-2.2.2.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
     <!---<script src="#application.settings.webroot#assets/js/global.js"></script>--->
 </cfoutput>
