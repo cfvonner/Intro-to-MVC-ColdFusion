@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <cfinclude template="#application.settings.webroot#header.cfm">
+        <cfinclude template="header.cfm">
         <title>Legacy Demo</title>
     </head>
     <body>
@@ -10,6 +10,6 @@
             #Now()#<br>
         </cfoutput>
         
-        <cfinclude template="#application.settings.webroot#footer.cfm">
+        <cfinclude template="footer.cfm">
     </body>
 </html>

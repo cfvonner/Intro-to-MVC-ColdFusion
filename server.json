@@ -1,3 +1,11 @@
 {
-    "name":"CFSummit-MVC"
+    "name":"CFSummit-MVC",
+    "app":{
+        "cfengine":"adobe@2016"
+    },
+    "web":{
+        "rewrites":{
+            "enable":true
+        }
+    }
 }
