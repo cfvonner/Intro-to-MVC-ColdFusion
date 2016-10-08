@@ -4,6 +4,17 @@ component output='false' {
     this.applicationTimeout = CreateTimeSpan( 1, 0, 0, 0 );
     this.sessionManagement = true;
     this.sessionTimeout = CreateTimeSpan( 0, 1, 0, 0 );
+    this.datasources = {
+        BeerTracker = {
+            database = "BeerTracker",
+            host = "localhost",
+            port = "1433",
+            driver = "MSSQLServer",
+            username = "cfusion",
+            password = "cfusion"
+        }
+    };
+    this.datasource = "BeerTracker";
     
 
     public boolean function OnApplicationStart() {
