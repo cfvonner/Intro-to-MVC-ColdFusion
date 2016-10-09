@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<cfquery name="getBeers" cachedwithin="#CreateTimeSpan(0,0,1,0)#">
-    SELECT  id
-            ,breweryId
-            ,name
-            ,type
-            ,abv
-            ,ibu
-    FROM dbo.Beer
-    ORDER BY name
-</cfquery>
+<cfsilent>
+    <cfquery name="getBeers">
+        SELECT  id
+                ,breweryId
+                ,name
+                ,type
+                ,abv
+                ,ibu
+        FROM dbo.Beer
+        ORDER BY name
+    </cfquery>
+</cfsilent>
 
 <html>
     <head>
@@ -45,7 +47,7 @@
                                 <td class="text-right">#getBeers.abv#</td>
                                 <td class="text-right">#getBeers.ibu#</td>
                                 <td class="text-left">
-                                    <a href="beer-edit?beer=#getBeers.id#">Edit</a>
+                                    <a href="beer-edit.cfm?beerId=#getBeers.id#">Edit</a>
                                 </td>
                             </tr>
                         </cfoutput>

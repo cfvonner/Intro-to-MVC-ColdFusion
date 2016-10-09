@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<cfquery name="getBreweries" cachedwithin="#CreateTimeSpan(0,0,1,0)#">
-    SELECT  id
-            ,name
-            ,city
-            ,state
-            ,country
-    FROM dbo.Brewery
-    ORDER BY name
-</cfquery>
+<cfsilent>
+    <cfquery name="getBreweries">
+        SELECT  id
+                ,name
+                ,city
+                ,state
+                ,country
+        FROM dbo.Brewery
+        ORDER BY name
+    </cfquery>
+</cfsilent>
 
 <html>
     <head>
@@ -21,7 +23,7 @@
                 <h3>Brewery List</h3>
             </div>
             <div class="container">
-                <a class="btn btn-default" href="#" role="button">Add Brewery</a>
+                <a class="btn btn-default" href="brewery-edit.cfm" role="button">Add Brewery</a>
             </div>
             <div class="container">
                 <table id="breweries" class="table table-bordered 
@@ -41,14 +43,12 @@
                                 <td class="text-left">#getBreweries.state#</td>
                                 <td class="text-left">#getBreweries.country#</td>
                                 <td class="text-left">
-                                    <a href="brewery-edit?brewery=#getBreweries.id#">Edit</a>
+                                    <a href="brewery-edit.cfm?breweryId=#getBreweries.id#">Edit</a>
                                 </td>
                             </tr>
                         </cfoutput>
                     </tbody>
                 </table>
-                
-                <cfdump var="#getBreweries#" label="getBreweries" expand="false">
             </div>
         </div>
         <cfinclude template="/ProceduralApp/footer.cfm">

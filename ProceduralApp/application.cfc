@@ -35,14 +35,15 @@ component output='false' {
 
     public void function OnRequest( required string targetpage ) {
         // set some application-wide settings, if not previously set or if url.reload='true'
-        if ( !structKeyExists( application, 'settings' ) ||
-            ( structKeyExists( url, 'reload' ) && URL.reload == 'true' ) ) {
+        if ( !StructKeyExists( application, 'settings' ) ||
+            ( StructKeyExists( url, 'reload' ) && URL.reload == 'true' ) ) {
             application.settings = {};
-            application.settings.webroot = '/LegacyApp/';
+            application.settings.webroot = '/ProceduralApp/';
         }
 
-        // merge the form and url scopes together into form scope for convenience
-        structAppend( form, URL );
+        // merge the form and url scopes together into request scope for convenience
+        if ( IsDefined( 'URL') ) request.append( url );
+        if ( Isdefined( 'form' ) ) request.append( form );
 
         // include the requested page 
         cfinclude( template=arguments.targetpage );
