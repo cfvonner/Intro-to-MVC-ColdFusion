@@ -7,6 +7,11 @@
     <body role="document">
         <div class="container" role="main">
             <div id="home" class="page-header">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        Home
+                    </li>
+                </ol>
                 <h1>CFSummit2016 MVC Demonstration App</h1>
             </div>
             <div class="container">

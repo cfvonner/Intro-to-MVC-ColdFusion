@@ -38,7 +38,7 @@ component output='false' {
         if ( !StructKeyExists( application, 'settings' ) ||
             ( StructKeyExists( url, 'reload' ) && URL.reload == 'true' ) ) {
             application.settings = {};
-            application.settings.webroot = '/ProceduralApp/';
+            application.settings.title = 'CFSummit2016 Procedural App';
         }
 
         // merge the form and url scopes together into request scope for convenience
