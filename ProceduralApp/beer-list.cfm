@@ -14,7 +14,7 @@
     </cfquery>
 </cfsilent>
 
-<html>
+<html lang="en">
     <head>
         <cfinclude template="header.cfm">
         <title>

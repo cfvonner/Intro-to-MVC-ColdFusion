@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <cfinclude template="header.cfm">
         <title>Procedural Demo</title>

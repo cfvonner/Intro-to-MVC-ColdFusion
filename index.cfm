@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <cfinclude template="/ProceduralApp/header.cfm">
         <title>CFSummit2016</title>
@@ -17,10 +17,10 @@
             <div class="container">
                 <ul>
                     <li>
-                        <a href="/ProceduralApp/index.cfm">Procedural App Demo</a>
+                        <a href="/ProceduralApp/">Procedural App Demo</a>
                     </li>
                     <li>
-                        <a href="/MVCApp/main/default">MVC Demo App</a>
+                        <a href="/MVCApp/">MVC Demo App</a>
                     </li>
                 </ul>
             </div>

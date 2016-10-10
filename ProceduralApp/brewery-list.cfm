@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <cfsilent>
-    <cfquery name="getBreweries">
+    <cfquery name="getAllBreweries">
         SELECT  id
                 ,name
                 ,city
@@ -11,7 +11,7 @@
     </cfquery>
 </cfsilent>
 
-<html>
+<html lang="en">
     <head>
         <cfinclude template="header.cfm">
         <title>
@@ -71,29 +71,29 @@
                             </th>
                         </thead>
                         <tbody>
-                            <cfloop query="getBreweries">
+                            <cfloop query="getAllBreweries">
                                 <tr>
                                     <td class="text-left">
-                                        #getBreweries.name#
+                                        #getAllBreweries.name#
                                     </td>
                                     <td class="text-left">
-                                        #getBreweries.city#
+                                        #getAllBreweries.city#
                                     </td>
                                     <td class="text-left">
-                                        #getBreweries.state#
+                                        #getAllBreweries.state#
                                     </td>
                                     <td class="text-left">
-                                        #getBreweries.country#
+                                        #getAllBreweries.country#
                                     </td>
                                     <td class="text-center text-nowrap">
-                                        <a href="brewery-edit.cfm?edit&breweryId=#getBreweries.id#" 
+                                        <a href="brewery-edit.cfm?edit&breweryId=#getAllBreweries.id#" 
                                            title="Edit" role="button">
                                             <i class="fa fa-pencil-square-o text-success" 
                                                aria-hidden="true">
                                             </i>
                                         </a>
                                         &nbsp;
-                                        <a href="brewery-edit.cfm?delete&breweryId=#getBreweries.id#" 
+                                        <a href="brewery-edit.cfm?delete&breweryId=#getAllBreweries.id#" 
                                            title="Delete" role="button">
                                             <i class="fa fa-trash text-danger" aria-hidden="true">
                                             </i>
