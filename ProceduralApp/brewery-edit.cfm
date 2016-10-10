@@ -6,20 +6,46 @@
     <cfparam name="request.breweryState" type="string" default="">
     <cfparam name="request.breweryCountry" type="string" default="">
 
-    <cfif StructKeyExists( request, "submit" ) AND request.breweryId GT 0>
-        <cfquery>
-            UPDATE dbo.Brewery
-            SET name = <cfqueryparam value="#request.breweryName#" 
-                    null="#!Len( Trim( request.breweryName ) )#" cfsqltype="cf_sql_varchar">
-                ,city = <cfqueryparam value="#request.breweryCity#" 
-                    null="#!Len( Trim( request.breweryCity ) )#" cfsqltype="cf_sql_varchar">
-                ,state = <cfqueryparam value="#request.breweryState#" 
-                    null="#!Len( Trim( request.breweryState ) )#" cfsqltype="cf_sql_varchar">
-                ,country = <cfqueryparam value="#request.breweryCountry#" 
-                    null="#!Len( Trim( request.breweryCountry ) )#" cfsqltype="cf_sql_varchar">
+    <cfif request.breweryId GT 0>
+        <!--- Query the database to see if a matching record exists --->
+        <cfquery name="getBrewery">
+            SELECT  id
+                    ,name
+                    ,city
+                    ,state
+                    ,country
+            FROM dbo.Brewery
             WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfset subtitle = "Edit Brewery">
+    </cfif>
+    <cfif request.breweryId GT 0 AND getBrewery.recordcount>
+        <cfif StructKeyExists( request, "submit" )>
+            <cfquery>
+                UPDATE dbo.Brewery
+                SET name = <cfqueryparam value="#request.breweryName#" 
+                        null="#!Len( Trim( request.breweryName ) )#" cfsqltype="cf_sql_varchar">
+                    ,city = <cfqueryparam value="#request.breweryCity#" 
+                        null="#!Len( Trim( request.breweryCity ) )#" cfsqltype="cf_sql_varchar">
+                    ,state = <cfqueryparam value="#request.breweryState#" 
+                        null="#!Len( Trim( request.breweryState ) )#" cfsqltype="cf_sql_varchar">
+                    ,country = <cfqueryparam value="#request.breweryCountry#" 
+                        null="#!Len( Trim( request.breweryCountry ) )#" cfsqltype="cf_sql_varchar">
+                WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cfset subtitle = "Edit Brewery">
+        <cfelseif StructKeyExists( request, "edit" )>
+            <cfset request.breweryName = getBrewery.name>
+            <cfset request.breweryCity = getBrewery.city>
+            <cfset request.breweryState = getBrewery.state>
+            <cfset request.breweryCountry = getBrewery.country>
+            <cfset subtitle = "Edit Brewery">
+        <cfelseif StructKeyExists( request, "delete" )>
+            <cfquery>
+                DELETE FROM dbo.Brewery
+                WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cflocation url="brewery-list.cfm" addtoken="false">
+        </cfif>
     <cfelseif StructKeyExists( request, "submit" ) AND request.breweryId EQ 0>
         <cfquery>
             INSERT INTO dbo.Brewery
@@ -35,27 +61,6 @@
             )
         </cfquery>
         <cfset subtitle = "Edit Brewery">
-    <cfelseif StructKeyExists( request, "edit" ) AND request.breweryId GT 0>
-        <cfquery name="getBrewery">
-            SELECT  id
-                    ,name
-                    ,city
-                    ,state
-                    ,country
-            FROM dbo.Brewery
-            WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cfset request.breweryName = getBrewery.name>
-        <cfset request.breweryCity = getBrewery.city>
-        <cfset request.breweryState = getBrewery.state>
-        <cfset request.breweryCountry = getBrewery.country>
-        <cfset subtitle = "Edit Brewery">
-    <cfelseif StructKeyExists( request, "delete" ) AND request.breweryId GT 0>
-        <cfquery>
-            DELETE FROM dbo.Brewery
-            WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cflocation url="brewery-list.cfm" addtoken="false">
     <cfelse>
         <cfset subtitle = "Add Brewery">
     </cfif>
@@ -108,7 +113,7 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="breweryName" 
                                        name="breweryName" placeholder="Brewery Name" 
-                                       value="#request.breweryName#">
+                                       value="#request.breweryName#" required="required">
                                 <span id="helpBlock" class="help-block">
                                     <p class="text-danger">Required</p>
                                 </span>

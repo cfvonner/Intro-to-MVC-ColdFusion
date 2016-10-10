@@ -37,7 +37,9 @@ component displayname="Brewery controller"  accessors="true" {
     }
     
     public void function save ( rc ) {
-        
+        rc.breweryId = breweryservice.save();
+        rc.subtitle = 'Add brewery';
+        variables.fw.redirect( action='brewery.edit', append='breweryId');
     }
     
     public void function delete ( rc ) {
