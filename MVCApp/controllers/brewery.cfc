@@ -16,11 +16,24 @@ component displayname="Brewery controller"  accessors="true" {
     }
     //maybe don't need this one, if use edit() w/ id=0
     public void function add ( rc ) {
-        
+        rc.breweryId = 0;
+        rc.breweryName = '';
+        rc.breweryCity = '';
+        rc.breweryState = '';
+        rc.breweryCountry = '';
+        rc.subtitle = 'Add brewery';
+        variables.fw.setView( 'brewery.edit' );
     }
     
     public void function edit ( rc ) {
-        
+        if ( StructKeyExists( rc, 'breweryId' ) && rc.breweryId > 0 ) {
+            var brewery = breweryService.getBrewery( rc.breweryId );
+            rc.breweryName = brewery.name;
+            rc.breweryCity = brewery.city;
+            rc.breweryState = brewery.state;
+            rc.breweryCountry = brewery.country;
+        }
+        rc.subtitle = 'Edit Brewery';
     }
     
     public void function save ( rc ) {
@@ -28,6 +41,9 @@ component displayname="Brewery controller"  accessors="true" {
     }
     
     public void function delete ( rc ) {
-        
+        if ( StructKeyExists( rc, 'breweryId' ) && rc.breweryId > 0 ) {
+            breweryService.delete( rc.breweryId );
+        }
+        variables.fw.redirect( action='brewery.list', append='none');
     }
 }

@@ -1,11 +1,6 @@
 component extends="framework.one" {
 
-    function setupApplication() {
-        application.settings = {
-            h1Title : 'CFSummit2016 MVC App',
-            title : 'MVC Demo'
-        };
-     }
+    function setupApplication() { }
 
     function setupEnvironment( env ) { }
 
@@ -23,6 +18,9 @@ component extends="framework.one" {
     function setupView( rc ) { }
 
     function before( struct rc ) {
-        rc.appSettings = application.settings;
+        rc.appSettings = {
+            h1Title : 'CFSummit2016 MVC App',
+            title : 'MVC Demo'
+        };
     }
 }
