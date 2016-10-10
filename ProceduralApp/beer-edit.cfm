@@ -7,21 +7,48 @@
     <cfparam name="request.beerABV" type="numeric" default="0">
     <cfparam name="request.beerIBU" type="numeric" default="0">
 
-    <cfif StructKeyExists( request, "submit" ) AND request.beerId GT 0>
-        <cfquery>
-            UPDATE dbo.Beer
-            SET breweryId = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
-                ,name = <cfqueryparam value="#request.beerName#" 
-                      null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
-                ,type = <cfqueryparam value="#request.beerType#" 
-                      null="#!Len( Trim( request.beerType ) )#" cfsqltype="cf_sql_varchar">
-                ,abv = <cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" 
-                      cfsqltype="cf_sql_decimal">
-                ,ibu = <cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" 
-                      cfsqltype="cf_sql_decimal">
+    <cfif request.beerId GT 0>
+        <cfquery name="getBeer">
+            SELECT  id
+                    ,breweryId
+                    ,name
+                    ,type
+                    ,abv
+                    ,ibu
+            FROM dbo.Beer
             WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
         </cfquery>
-        <cfset subtitle = "Edit Beer">
+    </cfif>
+    <cfif request.beerId GT 0 AND getBeer.recordcount>
+        <cfif StructKeyExists( request, "submit" )>
+            <cfquery>
+                UPDATE dbo.Beer
+                SET breweryId = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
+                    ,name = <cfqueryparam value="#request.beerName#" 
+                          null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
+                    ,type = <cfqueryparam value="#request.beerType#" 
+                          null="#!Len( Trim( request.beerType ) )#" cfsqltype="cf_sql_varchar">
+                    ,abv = <cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" 
+                          cfsqltype="cf_sql_decimal">
+                    ,ibu = <cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" 
+                          cfsqltype="cf_sql_decimal">
+                WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cfset subtitle = "Edit Beer">
+        <cfelseif StructKeyExists( request, "edit" )>
+            <cfset request.breweryId = getBeer.breweryId>
+            <cfset request.beerName = getBeer.name>
+            <cfset request.beerType = getBeer.type>
+            <cfset request.beerABV = getBeer.abv>
+            <cfset request.beerIBU = getBeer.ibu>
+            <cfset subtitle = "Edit Beer">
+        <cfelseif StructKeyExists( request, "delete" )>
+            <cfquery>
+                DELETE FROM dbo.Beer
+                WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cflocation url="beer-list.cfm" addtoken="false">
+        </cfif>
     <cfelseif StructKeyExists( request, "submit" ) AND request.beerId EQ 0>
         <cfquery>
             INSERT INTO dbo.Beer
@@ -38,29 +65,6 @@
             )
         </cfquery>
         <cfset subtitle = "Edit Beer">
-    <cfelseif StructKeyExists( request, "edit" ) AND request.beerId GT 0>
-        <cfquery name="getBeer">
-            SELECT  id
-                    ,breweryId
-                    ,name
-                    ,type
-                    ,abv
-                    ,ibu
-            FROM dbo.Beer
-            WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cfset request.breweryId = getBeer.breweryId>
-        <cfset request.beerName = getBeer.name>
-        <cfset request.beerType = getBeer.type>
-        <cfset request.beerABV = getBeer.abv>
-        <cfset request.beerIBU = getBeer.ibu>
-        <cfset subtitle = "Edit Beer">
-    <cfelseif StructKeyExists( request, "delete" ) AND request.beerId GT 0>
-        <cfquery>
-            DELETE FROM dbo.Beer
-            WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
-        </cfquery>
-        <cflocation url="beer-list.cfm" addtoken="false">
     <cfelse>
         <cfset subtitle = "Add Beer">
     </cfif>
@@ -116,7 +120,6 @@
                 <div class="container">
                     <form class="form-horizontal" action="beer-edit.cfm" name="beerForm" 
                           method="post">
-                    
                         <input id="beerId" name="beerId" type="hidden" value="#request.beerId#">
                         <div class="form-group">
                             <label for="beerName" class="col-sm-2 control-label">
@@ -125,7 +128,10 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="beerName" 
                                        name="beerName" placeholder="Beer Name" 
-                                       value="#request.beerName#">
+                                       value="#request.beerName#" required="required">
+                                <span id="helpBlock" class="help-block">
+                                    <p class="text-danger">Required</p>
+                                </span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -153,12 +159,12 @@
                             <div class="col-sm-10">
                                 <select class="form-control" id="beerType" name="beerType" 
                                         required="required">
-                                    <option value="0" 
-                                        <cfif request.breweryId EQ 0>selected="selected"</cfif>>
+                                    <option value="" 
+                                        <cfif request.beerType IS "">selected="selected"</cfif>>
                                         -Select a Style-</option>
                                     <cfloop query="getTypes">
                                         <option value="#getTypes.type#" 
-                                            <cfif getTypes.type IS request.beerType>selected="selected"</cfif>>
+                                            <cfif request.beerType IS getTypes.type>selected="selected"</cfif>>
                                             #getTypes.type#</option>
                                     </cfloop>
                                 </select>
