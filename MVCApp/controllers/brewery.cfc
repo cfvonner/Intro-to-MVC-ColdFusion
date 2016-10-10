@@ -14,7 +14,7 @@ component displayname="Brewery controller"  accessors="true" {
     public void function list ( rc ) {
         rc.breweries = breweryService.getAllBreweries();
     }
-    //maybe don't need this one, if use edit() w/ id=0
+    
     public void function add ( rc ) {
         rc.breweryId = 0;
         rc.breweryName = '';
@@ -37,7 +37,8 @@ component displayname="Brewery controller"  accessors="true" {
     }
     
     public void function save ( rc ) {
-        rc.breweryId = breweryservice.save();
+        rc.breweryId = breweryservice.save( rc.breweryId, rc.breweryName,
+            rc.breweryCity, rc.breweryState, rc.breweryCountry);
         rc.subtitle = 'Add brewery';
         variables.fw.redirect( action='brewery.edit', append='breweryId');
     }
