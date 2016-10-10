@@ -97,11 +97,8 @@
                     </h1>
                 </div>
                 <div class="container">
-                </div>
-                <div class="container">
                     <form class="form-horizontal" action="brewery-edit.cfm" name="breweryForm" 
                           method="post">
-                    
                         <input id="breweryId" name="breweryId" type="hidden" 
                                value="#request.breweryId#">
                         <div class="form-group">
@@ -112,6 +109,9 @@
                                 <input type="text" class="form-control" id="breweryName" 
                                        name="breweryName" placeholder="Brewery Name" 
                                        value="#request.breweryName#">
+                                <span id="helpBlock" class="help-block">
+                                    <p class="text-danger">Required</p>
+                                </span>
                             </div>
                         </div>
                         <div class="form-group">
