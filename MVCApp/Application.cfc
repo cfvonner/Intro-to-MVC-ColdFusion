@@ -20,10 +20,11 @@ component {
     function _get_framework_one() {
         if ( !structKeyExists( request, '_framework_one' ) ) {
             request._framework_one = new MyApplication({
-                trace : true,
-                reloadApplicationOnEveryRequest : true /*,
-                generateSES : true,
-                SESOmitIndex : true */
+                baseURL : "useRequestURI"
+                ,trace : true
+                ,reloadApplicationOnEveryRequest : true
+                //,generateSES : true
+                //,SESOmitIndex : true 
             });
         }
         return request._framework_one;
