@@ -5,7 +5,8 @@
                 ColdFusion Summit 2016
             </p>
             <p class="text-muted text-center small">
-                Powered by Adobe ColdFusion version #server.coldfusion.productversion#, Bootstrap 3, and Font Awesome.
+                Powered by Adobe ColdFusion version #server.coldfusion.productversion#, 
+                Bootstrap 3, and Font Awesome.
             </p>
         </div>
     </footer>
