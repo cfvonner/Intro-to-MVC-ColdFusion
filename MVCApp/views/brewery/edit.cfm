@@ -1,4 +1,27 @@
 <cfoutput>
+    <div id="home" class="page-header">
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#BuildURL( action='main.default' )#">
+                    MVC Demo
+                </a>
+            </li>
+            <li>
+                <a href="#BuildURL( action='brewery.list' )#">
+                    Brewery List
+                </a>
+            </li>
+            <li class="active">
+                #rc.subtitle#
+            </li>
+        </ol>
+        <h1>#rc.appSettings.h1Title#</h1>
+    </div>
     <div class="container">
         <form class="form-horizontal" action="#BuildURL( action='brewery.save' )#" 
               name="breweryForm" method="post">

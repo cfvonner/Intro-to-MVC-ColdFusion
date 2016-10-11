@@ -1,4 +1,17 @@
 <cfoutput>
+    <div id="home" class="page-header">
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            <li class="active">
+                MVC Demo
+            </li>
+        </ol>
+        <h1>#rc.appSettings.h1Title#</h1>
+    </div>
     <div class="container">
         <ul>
             <li>

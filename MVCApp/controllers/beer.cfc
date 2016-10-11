@@ -14,6 +14,7 @@ component displayname="Beer controller"  accessors="true" {
     
     public void function list ( rc ) {
         rc.beers = beerService.getAllBeers();
+        rc.subtitle = "Beer List";
     }
     
     public void function add ( rc ) {

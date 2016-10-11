@@ -13,6 +13,7 @@ component displayname="Brewery controller"  accessors="true" {
     
     public void function list ( rc ) {
         rc.breweries = breweryService.getAllBreweries();
+        rc.subtitle = "Brewery List";
     }
     
     public void function add ( rc ) {

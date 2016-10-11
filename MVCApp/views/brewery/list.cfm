@@ -1,4 +1,22 @@
 <cfoutput>
+    <div id="home" class="page-header">
+        <ol class="breadcrumb">
+            <li>
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#BuildURL( action='main.default' )#">
+                    MVC Demo
+                </a>
+            </li>
+            <li class="active">
+                #rc.subtitle#
+            </li>
+        </ol>
+        <h1>#rc.appSettings.h1Title#</h1>
+    </div>
     <div class="container space-bottom">
         <a class="btn btn-default btn-sm" href="#BuildURL( action='brewery.add' )#" role="button">
             <i class="fa fa-plus-square text-success" aria-hidden="true">
