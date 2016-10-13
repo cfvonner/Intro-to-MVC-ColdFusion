@@ -8,7 +8,7 @@
             </li>
             <li>
                 <a href="#BuildURL( action='main.default' )#">
-                    MVC Demo
+                    MVC Demo - FW/1
                 </a>
             </li>
             <li class="active">

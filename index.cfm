@@ -20,7 +20,10 @@
                         <a href="/ProceduralApp/">Procedural App Demo</a>
                     </li>
                     <li>
-                        <a href="/MVCApp/">MVC Demo App</a>
+                        <a href="/MVCApp-ColdBox/">MVC Demo App (ColdBox)</a>
+                    </li>
+                    <li>
+                        <a href="/MVCApp/">MVC Demo App (FW/1)</a>
                     </li>
                 </ul>
             </div>

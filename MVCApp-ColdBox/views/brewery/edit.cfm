@@ -7,12 +7,12 @@
                 </a>
             </li>
             <li>
-                <a href="#BuildURL( action='main.default' )#">
-                    MVC Demo - FW/1
+                <a href="#event.buildLink( 'main.default' )#">
+                    MVC Demo - ColdBox
                 </a>
             </li>
             <li>
-                <a href="#BuildURL( action='brewery.list' )#">
+                <a href="#event.buildLink( 'brewery.list' )#">
                     Brewery List
                 </a>
             </li>
@@ -20,10 +20,10 @@
                 #rc.subtitle#
             </li>
         </ol>
-        <h1>#rc.appSettings.h1Title#</h1>
+        <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">
-        <form class="form-horizontal" action="#BuildURL( action='brewery.save' )#" 
+        <form class="form-horizontal" action="#event.buildLink( 'brewery.save' )#" 
               name="breweryForm" method="post">
             <input id="breweryId" name="breweryId" type="hidden" 
                    value="#rc.breweryId#">
@@ -78,7 +78,7 @@
                     <button type="reset" class="btn btn-default" name="Reset">
                         Reset
                     </button>
-                    <a href="#BuildURL( action='brewery.list' )#" class="btn btn-warning" role="button">
+                    <a href="#event.buildLink( 'brewery.list' )#" class="btn btn-warning" role="button">
                         Cancel
                     </a>
                 </div>
