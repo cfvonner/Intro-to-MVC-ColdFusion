@@ -2,7 +2,7 @@ component displayname="Brewery controller"  accessors="true" {
     
     property name='breweryService'	inject='brewery'; // Dependency Injection in action!
     
-    public void function default ( event, rc, prc ) {
+    public void function index ( event, rc, prc ) {
         setNextEvent( 'brewery.list' );
     }
     
