@@ -7,27 +7,27 @@
                 </a>
             </li>
             <li>
-                <a href="#BuildURL( action='main.default' )#">
-                    MVC Demo - FW/1
+                <a href="#event.buildLink( 'main.index' )#">
+                    MVC Demo - ColdBox
                 </a>
             </li>
             <li class="active">
                 #rc.subtitle#
             </li>
         </ol>
-        <h1>#rc.appSettings.h1Title#</h1>
+        <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container space-bottom">
-        <a class="btn btn-default btn-sm" href="#BuildURL( action='brewery.add' )#" role="button">
+        <a class="btn btn-default btn-sm" href="#event.buildLink( 'beer.add' )#" role="button">
             <i class="fa fa-plus-square text-success" aria-hidden="true">
             </i>
             <span class="text-success">
-                Add Brewery
+                Add Beer
             </span>
         </a>
     </div>
     <div class="container">
-        <table id="breweries" 
+        <table id="beers" 
                class="table table-bordered 
             table-striped table-hover table-condensed table-dt">
             <thead>
@@ -35,41 +35,49 @@
                     Name
                 </th>
                 <th>
-                    City
+                    Brewery
                 </th>
                 <th>
-                    State/Province/Region
+                    Type
                 </th>
                 <th>
-                    Country
+                    <a href="##" data-toggle="tooltip" 
+                        title="Alcohol By Volume">ABV</a>
+                </th>
+                <th>
+                    <a href="##" data-toggle="tooltip" 
+                        title="International Bitterness Units">IBU</a>
                 </th>
                 <th data-orderable="false">
                 </th>
             </thead>
             <tbody>
-                <cfloop query="rc.breweries">
-                    <tr>
+                <cfloop query="rc.beers">
+                     <tr>
                         <td class="text-left">
-                            #rc.breweries.name#
+                            #rc.beers.name#
                         </td>
                         <td class="text-left">
-                            #rc.breweries.city#
+                            #rc.beers.breweryName#
                         </td>
                         <td class="text-left">
-                            #rc.breweries.state#
+                            #rc.beers.type#
                         </td>
-                        <td class="text-left">
-                            #rc.breweries.country#
+                        <td class="text-right">
+                            #rc.beers.abv#
+                        </td>
+                        <td class="text-right">
+                            #rc.beers.ibu#
                         </td>
                         <td class="text-center text-nowrap">
-                            <a href="#BuildURL( action='brewery.edit', queryString='breweryId=#rc.breweries.id#' )#" 
+                            <a href="#event.buildLink( linkto='beer.edit', queryString='beerId=#rc.beers.id#' )#" 
                                title="Edit" role="button">
                                 <i class="fa fa-pencil-square-o text-success" 
                                    aria-hidden="true">
                                 </i>
                             </a>
                             &nbsp;
-                            <a href="#BuildURL( action='brewery.delete', queryString='breweryId=#rc.breweries.id#' )#" 
+                            <a href="#event.buildLink( linkto='beer.delete', queryString='beerId=#rc.beers.id#' )#" 
                                title="Delete" role="button">
                                 <i class="fa fa-trash text-danger" aria-hidden="true">
                                 </i>

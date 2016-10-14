@@ -7,18 +7,18 @@
                 </a>
             </li>
             <li class="active">
-                MVC Demo - FW/1
+                MVC Demo - ColdBox
             </li>
         </ol>
-        <h1>#rc.appSettings.h1Title#</h1>
+        <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">
         <ul>
             <li>
-                <a href="#BuildURL( action='brewery.list' )#">Brewery List</a>
+                <a href="#event.buildLink( 'brewery.list' )#">Brewery List</a>
             </li>
             <li>
-                <a href="#BuildURL( action='beer.list' )#">Beer List</a>
+                <a href="#event.buildLink( 'beer.list' )#">Beer List</a>
             </li>
         </ul>
     </div>
