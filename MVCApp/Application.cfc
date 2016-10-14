@@ -22,7 +22,7 @@ component {
             request._framework_one = new MyApplication({
                 baseURL : "useRequestURI"
                 ,trace : true
-                ,reloadApplicationOnEveryRequest : true
+                ,reloadApplicationOnEveryRequest : false
                 //,generateSES : true
                 //,SESOmitIndex : true 
             });

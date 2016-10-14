@@ -18,7 +18,7 @@ cd ../MVCApp-ColdBox
 install
 ```
 
-Then back up to the parent folder again and yype `server start`.  The first time this is run, CommandBox will download the ColdFusion 2016 .war file and place it in it's local repository, unpack it, start up ColdFusion server, and launch your default web browser to the app home page.  From that point on, `server start` will just start the server.  The included _server.json_ file provides the required settings for CommandBox to run ColdFusion.
+Then back up to the parent folder again and type `server start`.  The first time this is run, CommandBox will download the ColdFusion 2016 .war file and place it in it's local repository, unpack it, start up ColdFusion server, and launch your default web browser to the app home page.  From that point on, `server start` will just start the server.  The included _server.json_ file provides the required settings for CommandBox to run ColdFusion.
 
 ```bash
 cd ../
