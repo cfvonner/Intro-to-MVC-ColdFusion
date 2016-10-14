@@ -1,5 +1,9 @@
 component displayname="Beer service" accessors="true" {
 
+    // alternate way of using Dependency Injection to load necessary objects
+    public any function init ( helperService ) {
+        variables.hs = helperService;
+    }
     public query function getAllBeers () {
         return queryExecute( 
            "SELECT  be.id
@@ -41,21 +45,23 @@ component displayname="Beer service" accessors="true" {
     public numeric function save ( numeric id = 0, string name = '', numeric breweryId, 
           string type = '', numeric abv = 0, numeric ibu = 0 ) {
         var beerExists = getBeer( id ).recordcount;
-        writeLog( text="#GetMetaData( this ).name#-->#getFunctionCalledName()#() arguments: #SerializeJSON( arguments )#", file="MVCDemo", type="information" );
         if ( arguments.id > 0 && beerExists ) {
             queryExecute(
                "UPDATE dbo.Beer
-                SET name = :name,
-                    breweryId = :breweryId, 
-                    type = :type, 
-                    abv = :abv, 
-                    ibu = :ibu
+                SET name = :name
+                    ,breweryId = :breweryId 
+                    ,type = :type 
+                    ,abv = :abv 
+                    ,ibu = :ibu
                 WHERE id = :id",
                 {
-                    id = { value = arguments.id, cfsqltype = 'integer' },
-                    name = { value = arguments.name, cfsqltype = 'varchar' },
-                    breweryId = { value = arguments.breweryId, cfsqltype = 'integer' },
-                    type = { value = arguments.type, cfsqltype = 'varchar' },
+                    id = { value = arguments.id, cfsqltype = 'integer'},
+                    name = { value = arguments.name, 
+                        null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
+                    breweryId = { value = arguments.breweryId, 
+                        null = hs.isEmptyString( arguments.breweryId ), cfsqltype = 'integer' },
+                    type = { value = arguments.type, 
+                        null = hs.isEmptyString( arguments.type ), cfsqltype = 'varchar' },
                     abv = { value = arguments.abv, cfsqltype = 'decimal' },
                     ibu = { value = arguments.ibu, cfsqltype = 'decimal' }
                 }
@@ -69,9 +75,12 @@ component displayname="Beer service" accessors="true" {
                 ( name, breweryId, type, abv, ibu )
                 VALUES ( :name, :breweryId, :type, :abv, :ibu )",
                 {
-                    breweryId = { value = arguments.breweryId, cfsqltype = 'integer' },
-                    name = { value = arguments.name, cfsqltype = 'varchar' },
-                    type = { value = arguments.type, cfsqltype = 'varchar' },
+                    name = { value = arguments.name, 
+                        null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
+                    breweryId = { value = arguments.breweryId, 
+                        null = hs.isEmptyString( arguments.breweryId ), cfsqltype = 'integer' },
+                    type = { value = arguments.type, 
+                        null = hs.isEmptyString( arguments.type ), cfsqltype = 'varchar' },
                     abv = { value = arguments.abv, cfsqltype = 'decimal' },
                     ibu = { value = arguments.ibu, cfsqltype = 'decimal' }
                 },

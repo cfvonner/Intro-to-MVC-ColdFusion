@@ -1,5 +1,10 @@
 component displayname="Brewery service" accessors="true" {
 
+    // alternate way of using Dependency Injection to load necessary objects
+    public any function init ( helperService ) {
+        variables.hs = helperService;
+    }
+    
     public query function getAllBreweries () {
         return queryExecute( 
            "SELECT  id
@@ -31,17 +36,21 @@ component displayname="Brewery service" accessors="true" {
         if ( arguments.id > 0 && breweryExists ) {
             queryExecute(
                "UPDATE dbo.Brewery
-                SET name = :name, 
-                    city = :city, 
-                    state = :state, 
-                    country = :country
+                SET name = :name
+                    ,city = :city
+                    ,state = :state
+                    ,country = :country
                 WHERE id = :id",
                 {
-                    id = { value = arguments.id, cfsqltype = 'integer' },
-                    name = { value = arguments.name, cfsqltype = 'varchar' },
-                    city = { value = arguments.city, cfsqltype = 'varchar' },
-                    state = { value = arguments.state, cfsqltype = 'varchar' },
-                    country = { value = arguments.country, cfsqltype = 'varchar' }
+                    id = { value = arguments.id, cfsqltype = 'integer'},
+                    name = { value = arguments.name, 
+                        null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
+                    city = { value = arguments.city, 
+                        null = hs.isEmptyString( arguments.city ), cfsqltype = 'varchar' },
+                    state = { value = arguments.state, 
+                        null = hs.isEmptyString( arguments.state ), cfsqltype = 'varchar' },
+                    country = { value = arguments.country, 
+                        null = hs.isEmptyString( arguments.country ), cfsqltype = 'varchar' }
                 }
             );
             return arguments.id;
@@ -53,10 +62,14 @@ component displayname="Brewery service" accessors="true" {
                 ( name, city, state, country )
                 VALUES ( :name, :city, :state, :country )",
                 {
-                    name = { value = arguments.name, cfsqltype = 'varchar' },
-                    city = { value = arguments.city, cfsqltype = 'varchar' },
-                    state = { value = arguments.state, cfsqltype = 'varchar' },
-                    country = { value = arguments.country, cfsqltype = 'varchar' }
+                    name = { value = arguments.name, 
+                        null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
+                    city = { value = arguments.city, 
+                        null = hs.isEmptyString( arguments.city ), cfsqltype = 'varchar' },
+                    state = { value = arguments.state, 
+                        null = hs.isEmptyString( arguments.state ), cfsqltype = 'varchar' },
+                    country = { value = arguments.country, 
+                        null = hs.isEmptyString( arguments.country ), cfsqltype = 'varchar' }
                 },
                 { result = 'result'}
             );
