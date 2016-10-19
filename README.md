@@ -28,4 +28,8 @@ start
 ##Notes
 There is an issue with generating SES-friendly URLs in this app because the MVC version of the app is in a subfolder off of the webroot.  FW/1 writes SES-friendly URL paths as if the application runs directly from the web root, so the generated URLs are incorrect.  To work around that, the FW/1 config setting `baseURL : "useRequestURI"` has been used; however, this prevents the FW/1 `buildURL()` function from writing the URLs entirely in SES-friendly format.
 
+##Contributions
+Thank you to the following individuals who have contributed to these sample applications:
+* [Brad Wood] (https://twitter.com/bdw429s) - ColdBox MVC demo application
+
 []: https://www.ortussolutions.com/products/commandbox
