@@ -2,7 +2,9 @@
 <html lang="en">
     <head>
         <cfinclude template="header.cfm">
-        <title>Procedural Demo</title>
+        <title>
+            <cfoutput>#request.title#</cfoutput>
+        </title>
     </head>
     <body role="document">
         <cfoutput>
@@ -10,15 +12,13 @@
                 <div id="home" class="page-header">
                     <ol class="breadcrumb">
                         <li>
-                            <a href="/">
-                                Home
-                            </a>
+                            <a href="/">Home</a>
                         </li>
                         <li class="active">
-                            Procedural Demo
+                            #request.h1Title#
                         </li>
                     </ol>
-                    <h1>#application.settings.title#</h1>
+                    <h1>#request.h1Title#</h1>
                 </div>
                 <div class="container">
                     <ul>

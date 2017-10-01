@@ -15,14 +15,14 @@
                     ,type
                     ,abv
                     ,ibu
-            FROM dbo.Beer
+            FROM Beer
             WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
         </cfquery>
     </cfif>
     <cfif request.beerId GT 0 AND getBeer.recordcount>
         <cfif StructKeyExists( request, "submit" )>
             <cfquery>
-                UPDATE dbo.Beer
+                UPDATE Beer
                 SET breweryId = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
                     ,name = <cfqueryparam value="#request.beerName#" 
                           null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
@@ -44,14 +44,14 @@
             <cfset subtitle = "Edit Beer">
         <cfelseif StructKeyExists( request, "delete" )>
             <cfquery>
-                DELETE FROM dbo.Beer
+                DELETE FROM Beer
                 WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cflocation url="beer-list.cfm" addtoken="false">
         </cfif>
     <cfelseif StructKeyExists( request, "submit" ) AND request.beerId EQ 0>
         <cfquery>
-            INSERT INTO dbo.Beer
+            INSERT INTO Beer
             ( breweryId, name, type, abv, ibu )
             VALUES ( <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
                     ,<cfqueryparam value="#request.beerName#" null="#!Len( Trim( request.beerName ) )#" 
@@ -72,13 +72,13 @@
     <cfquery name="getBreweries">
         SELECT  id
                 ,name
-        FROM dbo.Brewery
+        FROM Brewery
         ORDER BY name ASC
     </cfquery>
 
     <cfquery name="getTypes">
         SELECT DISTINCT type
-        FROM dbo.Beer
+        FROM Beer
         ORDER by type ASC
     </cfquery>
 </cfsilent>
@@ -86,7 +86,7 @@
     <head>
         <cfinclude template="header.cfm">
         <title>
-            Procedural Demo
+            <cfoutput>#request.title#</cfoutput>
         </title>
     </head>
     <body role="document">
@@ -101,7 +101,7 @@
                         </li>
                         <li>
                             <a href="index.cfm">
-                                Procedural Demo
+                                #request.h1Title#
                             </a>
                         </li>
                         <li>
@@ -114,7 +114,7 @@
                         </li>
                     </ol>
                     <h1>
-                        #application.settings.title#
+                        #request.h1Title#
                     </h1>
                 </div>
                 <div class="container">

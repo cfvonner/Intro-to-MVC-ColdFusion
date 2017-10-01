@@ -2,7 +2,8 @@
     <footer class="footer">
         <div class="container">
             <p class="text-muted text-center">
-                ColdFusion Summit 2016
+                <a href="https://github.com/cfvonner/Intro-to-MVC-ColdFusion", target="blank">
+                    Find this code on github</a>
             </p>
             <p class="text-muted text-center small">
                 Powered by Adobe ColdFusion version #server.coldfusion.productversion#, 

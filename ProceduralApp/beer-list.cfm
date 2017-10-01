@@ -8,8 +8,8 @@
                 ,be.type
                 ,be.abv
                 ,be.ibu
-        FROM dbo.Beer be
-        INNER JOIN dbo.Brewery br ON be.breweryId = br.id
+        FROM Beer be
+        INNER JOIN Brewery br ON be.breweryId = br.id
         ORDER BY be.name
     </cfquery>
 </cfsilent>
@@ -18,7 +18,7 @@
     <head>
         <cfinclude template="header.cfm">
         <title>
-            Procedural Demo
+            <cfoutput>#request.title#</cfoutput>
         </title>
     </head>
     <body role="document">
@@ -28,23 +28,17 @@
                     <div class="container">
                         <ol class="breadcrumb">
                             <li>
-                                <a href="/">
-                                    Home
-                                </a>
+                                <a href="/">Home</a>
                             </li>
                             <li>
-                                <a href="index.cfm">
-                                    Procedural Demo
-                                </a>
+                                <a href="index.cfm">#request.h1Title#</a>
                             </li>
                             <li class="active">
                                 Beer List
                             </li>
                         </ol>
                     </div>
-                    <h1>
-                        #application.settings.title#
-                    </h1>
+                    <h1>#request.h1Title#</h1>
                 </div>
                 <div class="container space-bottom">
                     <a class="btn btn-default btn-sm" href="beer-edit.cfm" role="button">

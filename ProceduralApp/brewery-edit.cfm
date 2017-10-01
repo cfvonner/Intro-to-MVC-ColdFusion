@@ -14,14 +14,14 @@
                     ,city
                     ,state
                     ,country
-            FROM dbo.Brewery
+            FROM Brewery
             WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
         </cfquery>
     </cfif>
     <cfif request.breweryId GT 0 AND getBrewery.recordcount>
         <cfif StructKeyExists( request, "submit" )>
             <cfquery>
-                UPDATE dbo.Brewery
+                UPDATE Brewery
                 SET name = <cfqueryparam value="#request.breweryName#" 
                         null="#!Len( Trim( request.breweryName ) )#" cfsqltype="cf_sql_varchar">
                     ,city = <cfqueryparam value="#request.breweryCity#" 
@@ -41,14 +41,14 @@
             <cfset subtitle = "Edit Brewery">
         <cfelseif StructKeyExists( request, "delete" )>
             <cfquery>
-                DELETE FROM dbo.Brewery
+                DELETE FROM Brewery
                 WHERE id = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cflocation url="brewery-list.cfm" addtoken="false">
         </cfif>
     <cfelseif StructKeyExists( request, "submit" ) AND request.breweryId EQ 0>
         <cfquery>
-            INSERT INTO dbo.Brewery
+            INSERT INTO Brewery
             ( name, city, state, country )
             VALUES ( <cfqueryparam value="#request.breweryName#" 
                       null="#!Len( Trim( request.breweryName ) )#" cfsqltype="cf_sql_varchar">
@@ -70,7 +70,7 @@
     <head>
         <cfinclude template="header.cfm">
         <title>
-            Procedural Demo
+            <cfoutput>#request.title#</cfoutput>
         </title>
     </head>
     <body role="document">
@@ -84,9 +84,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="index.cfm">
-                                Procedural Demo
-                            </a>
+                            <a href="index.cfm">#request.h1Title#</a>
                         </li>
                         <li>
                             <a href="brewery-list.cfm">
@@ -98,7 +96,7 @@
                         </li>
                     </ol>
                     <h1>
-                        #application.settings.title#
+                        #request.h1Title#
                     </h1>
                 </div>
                 <div class="container">

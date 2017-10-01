@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <cfinclude template="/ProceduralApp/header.cfm">
-        <title>CFSummit2016</title>
+        <title>Intro To MVC ColdFusion</title>
     </head>
     <body role="document">
         <div class="container" role="main">
@@ -12,7 +12,7 @@
                         Home
                     </li>
                 </ol>
-                <h1>CFSummit2016 MVC Demonstration App</h1>
+                <h1>Intro To MVC in ColdFusion</h1>
             </div>
             <div class="container">
                 <ul>
@@ -20,10 +20,10 @@
                         <a href="/ProceduralApp/">Procedural App Demo</a>
                     </li>
                     <li>
-                        <a href="/MVCApp-ColdBox/">MVC Demo App (ColdBox)</a>
+                        <a href="/MVCAppColdBox/">MVC Demo App (ColdBox)</a>
                     </li>
                     <li>
-                        <a href="/MVCApp/">MVC Demo App (FW/1)</a>
+                        <a href="/MVCAppFW1/">MVC Demo App (FW/1)</a>
                     </li>
                 </ul>
             </div>

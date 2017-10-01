@@ -1,0 +1,51 @@
+{
+    "name":"ColdBox Platform",
+    "version":"5.0.0-snapshot",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/coldbox/5.0.0/coldbox-5.0.0.zip",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "slug":"coldbox",
+    "packageDirectory":"coldbox",
+    "type":"mvc",
+    "keywords":"mvc,conventions,coldbox",
+    "homepage":"https://www.coldbox.org",
+    "documentation":"https://coldbox.ortusbooks.com/",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox/coldbox-platform"
+    },
+    "bugs":"https://ortussolutions.atlassian.net/browse/COLDBOX",
+    "shortDescription":"A conventions based MVC development framework",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Brad Wood <bdw429s@gmail.com>",
+        "Curt Gratz <gratz@computerknowhow.com>"
+    ],
+    "ignore":[
+        "**/.*",
+        "tests",
+        "apidocs",
+        "testbox",
+        "*/.md"
+    ],
+    "testbox":{
+        "runner":[
+            {
+                "default":"http://localhost:8599/tests/runner.cfm"
+            }
+        ]
+    },
+    "devDependencies":{
+        "testbox":"^2.4.0+80"
+    },
+    "installPaths":{
+        "testbox":"testbox"
+    },
+    "scripts":{
+        
+    }
+}

@@ -4,3 +4,5 @@
 /MVCApp/framework
 /MVCApp-ColdBox/coldbox
 /MVCApp-ColdBox/modules
+/DB/Derby
+/DB/H2

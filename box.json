@@ -1,0 +1,12 @@
+{
+    "dependencies":{
+        "fw1":"be",
+        "coldbox":"be",
+        "cbdebugger":"1.5.0+19"
+    },
+    "installPaths":{
+        "fw1":"MVCApp-FW1\\framework\\",
+        "coldbox":"MVCApp-ColdBox\\coldbox\\",
+        "cbdebugger":"MVCApp-ColdBox\\modules\\cbdebugger"
+    }
+}

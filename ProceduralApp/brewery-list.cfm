@@ -6,7 +6,7 @@
                 ,city
                 ,state
                 ,country
-        FROM dbo.Brewery
+        FROM Brewery
         ORDER BY name
     </cfquery>
 </cfsilent>
@@ -15,7 +15,7 @@
     <head>
         <cfinclude template="header.cfm">
         <title>
-            Procedural Demo
+            <cfoutput>#request.title#</cfoutput>
         </title>
     </head>
     <body role="document">
@@ -29,16 +29,14 @@
                             </a>
                         </li>
                         <li>
-                            <a href="index.cfm">
-                                Procedural Demo
-                            </a>
+                            <a href="index.cfm">#request.h1Title#</a>
                         </li>
                         <li class="active">
                             Brewery List
                         </li>
                     </ol>
                     <h1>
-                        #application.settings.title#
+                        #request.h1Title#
                     </h1>
                 </div>
                 <div class="container space-bottom">

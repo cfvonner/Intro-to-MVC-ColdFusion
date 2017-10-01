@@ -1,14 +1,18 @@
 {
-    "name":"CFSummit2016-MVC",
+    "name":"Intro-to-MVC",
     "app":{
         "cfengine":"adobe@2016"
     },
     "web":{
         "rewrites":{
-            "enable":true
+            "enable":true,
+            "config":"customurlrewrite.xml"
         },
         "http":{
             "port":8080
         }
+    },
+    "JVM":{
+        "heapSize":"2048"
     }
 }
