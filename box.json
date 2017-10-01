@@ -8,5 +8,6 @@
         "fw1":"MVCApp-FW1\\framework\\",
         "coldbox":"MVCApp-ColdBox\\coldbox\\",
         "cbdebugger":"MVCApp-ColdBox\\modules\\cbdebugger"
-    }
+    },
+    "version":"2.0.0"
 }
