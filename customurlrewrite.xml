@@ -16,7 +16,7 @@
 		<condition type="request-filename" operator="notdir"/>
 		<condition type="request-filename" operator="notfile"/>
 		<!-- Turn localhost/foo into localhost/index.cfm/foo -->
-		<from>^\/(MVCApp-.+?)\/(.+)$</from>
+		<from>^\/(MVCApp.+?)\/(.+)$</from>
 		<to type="passthrough">/$1/index.cfm/$2</to>
 	</rule>
 </urlrewrite>

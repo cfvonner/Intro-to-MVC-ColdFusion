@@ -1,6 +1,6 @@
 component {
     variables.curPath = Replace( GetDirectoryFromPath( GetCurrentTemplatePath() ), "\", "/", "ALL");
-    variables.dbPath = Replace( variables.curPath, "MVCApp-ColdBox/", "" ) & 'DB/Derby/';
+    variables.dbPath = Replace( variables.curPath, "MVCAppColdBox/", "" ) & 'DB/Derby/';
 
     this.name = hash( getBaseTemplatePath() );
     this.applicationTimeout = CreateTimeSpan( 1, 0, 0, 0 );
