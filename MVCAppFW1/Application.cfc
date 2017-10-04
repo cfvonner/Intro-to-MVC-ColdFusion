@@ -15,6 +15,7 @@ component {
     this.datasource = "BeerTracker";
     this.mappings['/framework'] = expandpath( '/MVCApp-FW1/fw1/framework' );
 
+    // FW/1 Configuration
     function _get_framework_one() {
         if ( !structKeyExists( request, '_framework_one' ) ) {
             request._framework_one = new MyApplication({

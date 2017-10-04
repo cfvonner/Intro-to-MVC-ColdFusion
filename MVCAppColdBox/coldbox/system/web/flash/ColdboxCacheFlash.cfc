@@ -20,8 +20,6 @@ component extends="coldbox.system.web.flash.AbstractFlashScope" accessors="true"
 	function init( required controller, required struct defaults={} ){
 		// default cache name
 		variables.cacheName = "default";
-		variables.appName 	= application.applicationname;
-
 		// super init
 		super.init( argumentCollection=arguments );
 
@@ -40,7 +38,7 @@ component extends="coldbox.system.web.flash.AbstractFlashScope" accessors="true"
 	* Build Flash Key according to standards
 	*/
 	function getFlashKey(){
-		var prefix = "cbFlash:#variables.appName#";
+		var prefix = "cbFlash:#application.applicationname#";
 		// Check jsession id First
 		if( isDefined( "session" ) and structKeyExists( session, "sessionid" ) ){
 			return "cbFlash:" & session.sessionid;

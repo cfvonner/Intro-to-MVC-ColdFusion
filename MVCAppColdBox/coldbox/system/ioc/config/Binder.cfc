@@ -305,16 +305,12 @@ Description :
 				<cfset tmpCurrentMapping = currentMapping>
 
 				<!--- Map the Path --->
-				<cfset mapPath( path=thisTargetPath, namespace=arguments.namespace, prepend=arguments.prepend, force=true )>
+				<cfset mapPath( path=thisTargetPath, namespace=arguments.namespace, prepend=arguments.prepend )>
 
 				<!--- Influence --->
 				<cfif structKeyExists( arguments, "influence" )>
 					<cfset arguments.influence( this, thisTargetPath )>
 				</cfif>
-
-				<!--- Do this right away so aliases are picked up before this mapping potentially gets overwritten
-				This is neccessary for multuple CFCs with the same name in different folders, but with unique aliases --->
-				<cfset processMappings()>
 
 				<!--- Merge the full array of mappings back together --->
 				<cfset arrayAppend( tmpCurrentMapping, currentMapping[ 1 ]  ) >
@@ -1009,7 +1005,6 @@ Description :
 		<cfargument name="class" 		required="true"  hint="The class of the listener"/>
 		<cfargument name="properties" 	required="false" default="#structNew()#" hint="The structure of properties for the listner" colddoc:generic="Struct"/>
 		<cfargument name="name" 		required="false" default=""  hint="The name of the listener"/>
-        <cfargument name="register" required="false" default="false"  hint="If true, registers the listener right away"/>
 		<cfscript>
 			// Name check?
 			if( NOT len(arguments.name) ){
@@ -1017,10 +1012,6 @@ Description :
 			}
 			// add listener
 			arrayAppend(instance.listeners, arguments);
-
-            if ( arguments.register ) {
-                getInjector().registerListener( arguments );
-            }
 
 			return this;
 		</cfscript>

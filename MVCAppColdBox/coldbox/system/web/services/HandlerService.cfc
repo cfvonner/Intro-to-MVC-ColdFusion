@@ -95,21 +95,21 @@ Description :
 			var mapping		= "";
 
 			// Check if handler mapped?
-			if( NOT wirebox.getBinder().mappingExists( arguments.invocationPath ) ){
+			if( NOT wirebox.getBinder().mappingExists( invocationPath ) ){
 				// lazy load checks for wirebox
 				wireboxSetup();
 				// extra attributes
 				attribs = {
-					handlerPath = arguments.invocationPath,
+					handlerPath = invocationPath,
 					isHandler	= true
 				};
 				// feed this handler to wirebox with virtual inheritance just in case, use registerNewInstance so its thread safe
-				mapping = wirebox.registerNewInstance( name=arguments.invocationPath, instancePath=arguments.invocationPath )
+				mapping = wirebox.registerNewInstance( name=invocationPath, instancePath=invocationPath )
 					.setVirtualInheritance( "coldbox.system.EventHandler" )
 					.addDIConstructorArgument( name="controller", value=controller )
 					.setThreadSafe( true )
 					.setScope( wirebox.getBinder().SCOPES.SINGLETON )
-					.setCacheProperties( key="handlers-#arguments.invocationPath#" )
+					.setCacheProperties( key="handlers-#invocationPath#" )
 					.setExtraAttributes( attribs );
 				// Are we caching or not handlers?
 				if ( NOT instance.handlerCaching ){
@@ -117,7 +117,7 @@ Description :
 				}
 			}
 			// retrieve, build and wire from wirebox
-			oHandler = wirebox.getInstance( arguments.invocationPath );
+			oHandler = wirebox.getInstance( invocationPath );
 
 			//return handler
 			return oHandler;
@@ -405,7 +405,7 @@ Description :
 			instance.log.error( "Invalid Event detected: #arguments.event#. Path info: #cgi.path_info#, query string: #cgi.query_string#" );
 
 			// Throw Exception
-			throw( message="The event: #arguments.event# is not a valid registered event.", type="HandlerService.EventHandlerNotRegisteredException" );
+			throw( message="The event: #arguments.event# is not valid registered event.", type="HandlerService.EventHandlerNotRegisteredException" );
 		</cfscript>
 	</cffunction>
 

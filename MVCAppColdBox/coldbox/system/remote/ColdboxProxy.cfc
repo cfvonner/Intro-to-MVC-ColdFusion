@@ -121,7 +121,7 @@ Description :
 
 			//Execute the Event if not demarcated to not execute
 			if( NOT event.isNoExecution() ){
-				refLocal.results = cbController.runEvent( defaultEvent=true );
+				refLocal.results = cbController.runEvent( default=true );
 			}
 
 			//Request END Handler if defined

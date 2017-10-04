@@ -50,7 +50,7 @@ Description :
 				// Scope Storages
 				scopeStorage = createObject("component","coldbox.system.core.collections.ScopeStorage").init(),
 				// Version
-				version  = "5.0.0-snapshot",
+				version  = "4.3.0+188",
 				// The Configuration Binder object
 				binder   = "",
 				// ColdBox Application Link
@@ -558,9 +558,9 @@ Description :
 			// iterate and provide baby!
 			for(x=1; x lte providerLen; x++){
 				// add the provided method to the providers structure.
-				arguments.targetObject.$wbProviders[ providerMethods[ x ].method ] = providerMethods[ x ].mapping;
+				arguments.targetObject.$wbProviders[ providerMethods[x].method ] = providerMethods[x].mapping;
 				// Override the function by injecting it, this does private/public functions
-				arguments.targetObject.injectMixin(providerMethods[ x ].method, instance.builder.buildProviderMixer);
+				arguments.targetObject.injectMixin(providerMethods[x].method, instance.builder.buildProviderMixer);
 			}
 		</cfscript>
     </cffunction>
@@ -604,43 +604,41 @@ Description :
 			var x			= 1;
 
 			for(x=1; x lte DILen; x++){
-				var thisDIData = arguments.DIData[ x ];
-
 				// Init the lookup structure
 				refLocal = {};
 				// Check if direct value has been placed.
-				if( !isNull( thisDIData.value ) ){
-					refLocal.dependency = thisDIData.value;
+				if( structKeyExists(arguments.DIData[x],"value") ){
+					refLocal.dependency = arguments.DIData[x].value;
 				}
 				// else check if dsl is used?
-				else if( !isNull(thisDIData.dsl) ){
+				else if( structKeyExists(arguments.DIData[x], "dsl") ){
 					// Get DSL dependency by sending entire DI structure to retrieve
-					refLocal.dependency = instance.builder.buildDSLDependency( definition=thisDIData, targetID=arguments.targetID, targetObject=arguments.targetObject );
+					refLocal.dependency = instance.builder.buildDSLDependency( definition=arguments.DIData[ x ], targetID=arguments.targetID, targetObject=arguments.targetObject );
 				}
 				// else we have to have a reference ID or a nasty bug has ocurred
 				else{
-					refLocal.dependency = getInstance( arguments.DIData[ x ].ref );
+					refLocal.dependency = getInstance( arguments.DIData[x].ref );
 				}
 
 				// Check if dependency located, else log it and skip
-				if( structKeyExists( refLocal, "dependency" ) ){
+				if( structKeyExists(refLocal,"dependency") ){
 					// scope or setter determination
 					refLocal.scope = "";
-					if( structKeyExists(arguments.DIData[ x ],"scope") ){ refLocal.scope = arguments.DIData[ x ].scope; }
+					if( structKeyExists(arguments.DIData[x],"scope") ){ refLocal.scope = arguments.DIData[x].scope; }
 					// Inject dependency
 					injectTarget(target=targetObject,
-							     propertyName=arguments.DIData[ x ].name,
+							     propertyName=arguments.DIData[x].name,
 							     propertyObject=refLocal.dependency,
 							     scope=refLocal.scope,
-							     argName=arguments.DIData[ x ].argName);
+							     argName=arguments.DIData[x].argName);
 
 					// some debugging goodness
 					if( instance.log.canDebug() ){
-						instance.log.debug("Dependency: #arguments.DIData[ x ].toString()# --> injected into #arguments.targetID#");
+						instance.log.debug("Dependency: #arguments.DIData[x].toString()# --> injected into #arguments.targetID#");
 					}
 				}
 				else if( instance.log.canDebug() ){
-					instance.log.debug("Dependency: #arguments.DIData[ x ].toString()# Not Found when wiring #arguments.targetID#. Registered mappings are: #structKeyList(instance.binder.getMappings())#");
+					instance.log.debug("Dependency: #arguments.DIData[x].toString()# Not Found when wiring #arguments.targetID#. Registered mappings are: #structKeyList(instance.binder.getMappings())#");
 				}
 			}
 		</cfscript>
@@ -840,42 +838,36 @@ Description :
     		var listeners 	= instance.binder.getListeners();
 			var regLen		= arrayLen(listeners);
 			var x			= 1;
+			var thisListener = "";
 
 			// iterate and register listeners
-			for( x = 1; x lte regLen; x++ ){
-				registerListener( listeners[ x ] );
-			}
-		</cfscript>
-    </cffunction>
+			for(x=1; x lte regLen; x++){
+				// try to create it
+				try{
+					// create it
+					thisListener = createObject("component", listeners[x].class);
+					// configure it
+					thisListener.configure( this, listeners[x].properties);
+				}
+				catch(Any e){
+					instance.log.error("Error creating listener: #listeners[x].toString()#", e);
+					throw(message="Error creating listener: #listeners[x].toString()#",
+									  detail="#e.message# #e.detail# #e.stackTrace#",
+									  type="Injector.ListenerCreationException");
+				}
 
-	<!--- registerListener --->
-    <cffunction name="registerListener" output="false" access="public" returntype="void" hint="Register all the configured listeners in the configuration file">
-    	<cfargument name="listener" required="true" hint="The listener to register" />
-    	<cfscript>
-			try{
-				// create it
-				var thisListener = createObject("component", listener.class);
-				// configure it
-				thisListener.configure( this, listener.properties);
-			}
-			catch(Any e){
-				instance.log.error("Error creating listener: #listener.toString()#", e);
-				throw(message="Error creating listener: #listener.toString()#",
-								  detail="#e.message# #e.detail# #e.stackTrace#",
-								  type="Injector.ListenerCreationException");
-			}
+				// Now register listener
+				if( NOT isColdBoxLinked() ){
+					instance.eventManager.register(thisListener,listeners[x].name);
+				}
+				else{
+					instance.eventManager.registerInterceptor(interceptorObject=thisListener,interceptorName=listeners[x].name);
+				}
 
-			// Now register listener
-			if( NOT isColdBoxLinked() ){
-				instance.eventManager.register(thisListener,listener.name);
-			}
-			else{
-				instance.eventManager.registerInterceptor(interceptorObject=thisListener,interceptorName=listener.name);
-			}
-
-			// debugging
-			if( instance.log.canDebug() ){
-				instance.log.debug("Injector has just registered a new listener: #listener.toString()#");
+				// debugging
+				if( instance.log.canDebug() ){
+					instance.log.debug("Injector has just registered a new listener: #listeners[x].toString()#");
+				}
 			}
 		</cfscript>
     </cffunction>

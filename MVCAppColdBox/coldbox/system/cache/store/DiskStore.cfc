@@ -25,7 +25,8 @@ Description :
 				cacheProvider   = arguments.cacheProvider,
 				storeID 		= createObject('java','java.lang.System').identityHashCode(this),
 				indexer    		= createObject("component","coldbox.system.cache.store.indexers.MetadataIndexer").init(fields),
-				converter 		= createObject("component","coldbox.system.core.conversion.ObjectMarshaller").init()
+				converter 		= createObject("component","coldbox.system.core.conversion.ObjectMarshaller").init(),
+				fileUtils		= createObject("component","coldbox.system.core.util.FileUtils")
 			};
 
 			// Get extra configuration details from cacheProvider's configuration for this diskstore
@@ -50,8 +51,8 @@ Description :
 			}
 
 			//Check if directory exists else create it
-			if( NOT directoryExists( instance.directoryPath ) ){
-				directoryCreate( instance.directoryPath );
+			if( NOT directoryExists(instance.directoryPath) ){
+				instance.fileUtils.directoryCreate(path=instance.directoryPath);
 			}
 
 			return this;
@@ -76,9 +77,9 @@ Description :
 	<!--- clearAll --->
     <cffunction name="clearAll" output="false" access="public" returntype="void" hint="Clear all elements of the store">
 		<cfscript>
-			directoryDelete( instance.directoryPath, true );
+			instance.fileUtils.directoryRemove(path=instance.directoryPath,recurse=true);
 			instance.indexer.clearAll();
-			directoryCreate( instance.directoryPath );
+			instance.fileUtils.directoryCreate(path=instance.directoryPath);
 		</cfscript>
     </cffunction>
 
@@ -99,13 +100,13 @@ Description :
 		<cflock name="DiskStore.#instance.storeID#.#arguments.objectKey#" type="readonly" timeout="10" throwonTimeout="true">
 		<cfscript>
 			// check if object is missing and in indexer
-			if( NOT fileExists( getCacheFilePath( arguments.objectKey ) ) AND instance.indexer.objectExists( arguments.objectKey ) ){
+			if( NOT instance.fileUtils.isFile( getCacheFilePath(arguments.objectKey) ) AND instance.indexer.objectExists( arguments.objectKey ) ){
 				instance.indexer.clear( arguments.objectKey );
 				return false;
 			}
 
 			// Check if object on disk, on indexer and NOT expired
-			if( fileExists( getCacheFilePath( arguments.objectKey ) )
+			if( instance.fileUtils.isFile( getCacheFilePath(arguments.objectKey) )
 			    AND instance.indexer.objectExists( arguments.objectKey )
 				AND NOT instance.indexer.getObjectMetadataProperty(arguments.objectKey,"isExpired") ){
 				return true;
@@ -143,15 +144,15 @@ Description :
 
 		<cflock name="DiskStore.#instance.storeID#.#arguments.objectKey#" type="exclusive" timeout="10" throwonTimeout="true">
 		<cfscript>
-			if( lookup( arguments.objectKey ) ){
+			if( lookup(arguments.objectKey) ){
 
 				// if simple value, just return it
-				if( instance.indexer.getObjectMetadataProperty( arguments.objectKey, "isSimple" ) ){
-					return trim( fileRead( thisFilePath ) );
+				if( instance.indexer.getObjectMetadataProperty(arguments.objectKey,"isSimple") ){
+					return trim(instance.fileUtils.readFile( thisFilePath ));
 				}
 
 				//else we deserialize
-				return instance.converter.deserializeObject( filePath = thisFilePath );
+				return instance.converter.deserializeObject(filePath=thisFilePath);
 
 			}
 		</cfscript>
@@ -206,7 +207,7 @@ Description :
 		<cfscript>
 			// If simple value just write it out to disk
 			if( isSimpleValue(arguments.object) ){
-			fileWrite( thisFilePath, trim( arguments.object ) );
+				instance.fileUtils.saveFile( thisFilePath, trim(arguments.object) );
 			}
 			else{
 				// serialize it
@@ -228,11 +229,11 @@ Description :
 		<cflock name="DiskStore.#instance.storeID#.#arguments.objectKey#" type="exclusive" timeout="10" throwonTimeout="true">
 			<cfscript>
 			// check it
-			if( NOT fileExists( thisFilePath ) ){
+			if( NOT instance.fileUtils.isFile(thisFilePath) ){
 				return false;
 			}
 			// Remove it
-			fileDelete( thisFilePath );
+			instance.fileUtils.removeFile( thisFilePath );
 			instance.indexer.clear( arguments.objectKey );
 
 			return true;

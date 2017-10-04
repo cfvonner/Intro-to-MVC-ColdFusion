@@ -10,9 +10,6 @@ Description :
 ----------------------------------------------------------------------->
 <cfcomponent output="false" hint="The main ColdBox utility library filled with lots of nice goodies.">
 
-	<!--- Construct Static System Pointer --->
-	<cfset variables.system = createObject( "java", "java.lang.System" )>
-
 	<!--- getMixerUtil --->
     <cffunction name="getMixerUtil" output="false" access="public" returntype="any" hint="Get the mixer utility" colddoc:generic="coldbox.system.core.dynamic.MixerUtil">
     	<cfscript>
@@ -147,77 +144,6 @@ Description :
 			     message="#arguments.statusText#"
 				 detail="#arguments.detail#">
 
-    </cffunction>
-
-    <!--- getSystemSetting --->
-    <cffunction name="getSystemSetting" output="false" access="public" returntype="any" hint="Retrieve a Java System property or env value by name.">
-    	<cfargument name="key" required="true" type="string" hint="The name of the setting to look up."/>
-		<cfargument name="defaultValue" required="false" hint="The default value to use if the key does not exist in the system properties or the env" />
-
-		<cfscript>
-			var value = system.getProperty( arguments.key );
-			if ( ! isNull( value ) ) {
-				return value;
-			}
-			
-			value = system.getEnv( arguments.key );
-			if ( ! isNull( value ) ) {
-				return value;
-			}
-
-			if ( ! isNull( arguments.defaultValue ) ) {
-				return arguments.defaultValue;
-			}
-
-			throw(
-				type = "SystemSettingNotFound",
-				message = "Could not find a Java System property or Env setting with key [#arguments.key#]."
-			);
-		</cfscript>
-    </cffunction>
-
-    <!--- getSystemProperty --->
-    <cffunction name="getSystemProperty" output="false" access="public" returntype="any" hint="Retrieve a Java System property or env value by name.">
-    	<cfargument name="key" required="true" type="string" hint="The name of the setting to look up."/>
-		<cfargument name="defaultValue" required="false" hint="The default value to use if the key does not exist in the system properties" />
-
-		<cfscript>
-			var value = system.getProperty( arguments.key );
-			if ( ! isNull( value ) ) {
-				return value;
-			}
-
-			if ( ! isNull( arguments.defaultValue ) ) {
-				return arguments.defaultValue;
-			}
-
-			throw(
-				type = "SystemSettingNotFound",
-				message = "Could not find a Java System property with key [#arguments.key#]."
-			);
-		</cfscript>
-    </cffunction>
-
-    <!--- getEnv --->
-    <cffunction name="getEnv" output="false" access="public" returntype="any" hint="Retrieve a Java System property or env value by name.">
-    	<cfargument name="key" required="true" type="string" hint="The name of the setting to look up."/>
-		<cfargument name="defaultValue" required="false" hint="The default value to use if the key does not exist in the env" />
-
-		<cfscript>
-			var value = system.getEnv( arguments.key );
-			if ( ! isNull( value ) ) {
-				return value;
-			}
-
-			if ( ! isNull( arguments.defaultValue ) ) {
-				return arguments.defaultValue;
-			}
-
-			throw(
-				type = "SystemSettingNotFound",
-				message = "Could not find a env property with key [#arguments.key#]."
-			);
-		</cfscript>
     </cffunction>
 
 <!------------------------------------------- Taxonomy Utility Methods ------------------------------------------>

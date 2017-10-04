@@ -32,7 +32,7 @@ Description :
 				// Life-cycle
 				"applicationEnd" , "sessionStart", "sessionEnd", "preProcess", "preEvent", "postEvent", "postProcess", "preProxyResults",
 				// Layout-View Events
-				"preLayout", "preRender", "postRender", "preViewRender", "postViewRender", "preLayoutRender", "postLayoutRender", "afterRendererInit",
+				"preLayout", "preRender", "postRender", "preViewRender", "postViewRender", "preLayoutRender", "postLayoutRender",
 				// Module Events
 				"preModuleLoad", "postModuleLoad", "preModuleUnload", "postModuleUnload"
 			];
@@ -421,10 +421,11 @@ Description :
 					logbox 		= controller.getLogBox(), 
 					controller 	= controller 
 				);
-				instance.interceptionStates[ arguments.state ] = oInterceptorState;
-			} else {
+				structInsert( instance.interceptionStates , arguments.state, oInterceptorState );
+			}
+			else{
 				// Get the State we need to register in
-				oInterceptorState = instance.interceptionStates[  arguments.state ];
+				oInterceptorState = structFind( instance.interceptionStates, arguments.state );
 			}
 
 			// Verify if the interceptor is already in the state

@@ -69,16 +69,8 @@ component serializable="false" accessors="true"{
 		// Setup the Framework And Application
 		application[ appKey ].getLoaderService().loadApplication( COLDBOX_CONFIG_FILE, COLDBOX_APP_MAPPING );
 		// Application Start Handler
-		try {
-			if ( len( application[ appKey ].getSetting( "ApplicationStartHandler" ) ) ){
-				application[ appKey ].runEvent( event=application[ appKey ].getSetting( "ApplicationStartHandler" ) );
-			}
-		}
-		catch ( any e ) {
-			// process the exception
-			writeOutput( processException( application[ appKey ], e ) );
-			// abort it, something went really wrong.
-			abort;
+		if ( len( application[ appKey ].getSetting( "ApplicationStartHandler" ) ) ){
+			application[ appKey ].runEvent( event=application[ appKey ].getSetting( "ApplicationStartHandler" ) );
 		}
 		// Check if fwreinit is sent, if sent, ignore it, we are loading the framework
 		if( structKeyExists( url, "fwreinit" ) ){
@@ -218,18 +210,13 @@ component serializable="false" accessors="true"{
 					if( isStruct( renderData ) and not structisEmpty( renderData ) ){
 						renderedContent = cbController.getDataMarshaller().marshallData( argumentCollection=renderData );
 					}
-					// Return HTML from handler
-					else if( 
-						!isNull( refResults.results ) 
-						&&
-						isSimpleValue( refResults.results )
-					){
+					// Check for Event Handler return results
+					else if( structKeyExists( refResults, "results" ) ){
 						renderedContent = refResults.results;
 					}
 					// Render Layout/View pair via set variable to eliminate whitespace
 					else {
-						renderedContent = cbcontroller.getRenderer()
-							.renderLayout( module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule() );
+						renderedContent = cbcontroller.getRenderer().renderLayout( module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule() );
 					}
 
 					//****** PRE-RENDER EVENTS *******/
@@ -247,28 +234,11 @@ component serializable="false" accessors="true"{
 					    structKeyExists( eCacheEntry, "lastAccessTimeout" )
 					){
 						lock type="exclusive" name="#variables.appHash#.caching.#eCacheEntry.cacheKey#" timeout="#variables.lockTimeout#" throwontimeout="true"{
-							
-							// Try to discover the content type
-							var defaultContentType = "text/html";
-							try{
-								// Discover from event caching first.
-								if( isStruct( renderData ) and not structisEmpty( renderData ) ){
-									defaultContentType 	= renderData.contentType;
-								} 
-								// Else, ask the engine
-								else {
-									defaultContentType = getPageContext().getResponse().getContentType();
-								}
-							} catch( any e){
-								// Catch for stupid ACF2016 incompatiblity on the Servlet Response Interface!
-								defaultContentType = getPageContext().getResponse().getResponse().getContentType();
-							}
-							
 							// prepare storage entry
 							var cacheEntry = {
 								renderedContent = renderedContent,
 								renderData		= false,
-								contentType 	= defaultContentType,
+								contentType 	= getPageContext().getResponse().getContentType(),
 								encoding		= "",
 								statusCode		= "",
 								statusText		= "",
@@ -277,7 +247,7 @@ component serializable="false" accessors="true"{
 							
 							// is this a render data entry? If So, append data
 							if( isStruct( renderData ) and not structisEmpty( renderData ) ){
-								cacheEntry.renderData 	= true;
+								cacheEntry.renderData = true;
 								structAppend( cacheEntry, renderData, true );
 							}
 
@@ -294,12 +264,13 @@ component serializable="false" accessors="true"{
 
 					// Render Data? With stupid CF whitespace stuff.
 					if( isStruct( renderData ) and not structisEmpty( renderData ) ){/*
-						*/renderData.controller = cbController;renderDataSetup( argumentCollection=renderData );/*
+						*/renderData.controller = cbController;renderDataSetup(argumentCollection=renderData);/*
 						// Binary
 						*/if( renderData.isBinary ){ cbController.getDataMarshaller().renderContent( type="#renderData.contentType#", variable="#renderedContent#" ); }/*
 						// Non Binary
 						*/else{ writeOutput( renderedContent ); }
-					} else {
+					}
+					else{
 						writeOutput( renderedContent );
 					}
 
@@ -311,7 +282,7 @@ component serializable="false" accessors="true"{
 
 			//****** POST PROCESS *******/
 			if( len( cbController.getSetting( "RequestEndHandler" ) ) ){
-				cbController.runEvent( event=cbController.getSetting("RequestEndHandler"), prePostExempt=true );
+				cbController.runEvent(event=cbController.getSetting("RequestEndHandler"), prePostExempt=true);
 			}
 			interceptorService.processState( "postProcess" );
 			//****** FLASH AUTO-SAVE *******/
@@ -319,7 +290,8 @@ component serializable="false" accessors="true"{
 				cbController.getRequestService().getFlashScope().saveFlash();
 			}
 
-		} catch(Any e) {
+		}
+		catch(Any e){
 			// process the exception and render its report
 			writeOutput( processException( cbController, e ) );
 		}
@@ -332,7 +304,9 @@ component serializable="false" accessors="true"{
 	* Verify if a reinit is sent
 	*/
 	boolean function isFWReinit(){
-		var appKey 	= locateAppKey();
+		var reinitPass 		= "";
+		var incomingPass 	= "";
+		var appKey 			= locateAppKey();
 
 		// CF Parm Structures just in case
 		param name="FORM" 	default="#structNew()#";
@@ -347,7 +321,9 @@ component serializable="false" accessors="true"{
 		if ( structKeyExists( url, "fwreinit" ) or structKeyExists( form, "fwreinit" ) ){
 
 			// Check if we have a reinit password at hand.
-			var reinitPass = application[ appKey ].getSetting( name="ReinitPassword", defaultValue="" );
+			if ( application[ appKey ].settingExists( "ReinitPassword" ) ){
+				reinitPass = application[ appKey ].getSetting( "ReinitPassword" );
+			}
 
 			// pass Checks
 			if ( NOT len( reinitPass ) ){
@@ -355,7 +331,6 @@ component serializable="false" accessors="true"{
 			}
 
 			// Get the incoming pass from form or url
-			var incomingPass 	= "";
 			if( structKeyExists( form, "fwreinit" ) ){
 				incomingPass = form.fwreinit;
 			} else {
@@ -365,8 +340,6 @@ component serializable="false" accessors="true"{
 			// Compare the passwords
 			if( compare( reinitPass, hash( incomingPass ) ) eq 0 ){
 				return true;
-			} else {
-				application[ appKey ].getLog().warn( "The incoming reinit password is not valid." );
 			}
 
 		}//else if reinit found.
@@ -512,10 +485,7 @@ component serializable="false" accessors="true"{
 		// Store exception in private context
 		event.setPrivateValue( "exception", oException );
 
-		// Set Exception Header
-		getPageContext().getResponse().setStatus( 500, "Internal Server Error" );
-
-		// Run custom Exception handler if Found, else run default exception routines
+		//Run custom Exception handler if Found, else run default exception routines
 		if ( len( arguments.controller.getSetting( "ExceptionHandler" ) ) ){
 			try{
 				arguments.controller.runEvent( arguments.controller.getSetting( "Exceptionhandler" ) );

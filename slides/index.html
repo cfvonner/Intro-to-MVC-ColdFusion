@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Intro To MVC</title>
+
+        <link rel="stylesheet" href="../assets/reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../assets/reveal.js/css/theme/leagueCustom.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="../assets/reveal.js/lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) 
+                ? '../assets/reveal.js/css/print/pdf.css' 
+                : '../assets/reveal.js/css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div id="hidden" style="display:none;">
+            <div id="footer">
+                <div id="footer-left">
+                    Carl Von Stetten / <a href="https://twitter.com/cfvonner">@cfvonner</a>
+                </div>
+            </div>
+        </div>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h2>Taking Application Design To The Next Level with MVC</h2>
+                    <h4>Carl Von Stetten / 
+                        <a href="https://twitter.com/cfvonner" target="blank">@cfvonner</a>
+                    </h4>
+                </section>
+                <section>
+                    <h2>About Me</h2>
+                    <ul>
+                        <li>GIS Analyst for Central San (<a href="http://www.centralsan.org" target="_blank">www.centralsan.org</a>) in Northern California
+                            <ul>
+                                <li>Working with ColdFusion since 2002 (CF 4.5)</li>
+                                <li>Lots of spatial and non-spatial data modeling, data management, intranet application development</li>
+                            </ul>
+                        </li>
+                        <li>Tools I Use:
+                            <ul>
+                                <li>Adobe ColdFusion, JavaScript (incl. jQuery &amp; Bootstrap), Microsoft SQL Server, Python, Esri ArcGIS Desktop and Server, Geocortex, Safe FME (spatial ETLs), etc…</li>
+                            </ul>
+                        </li>
+                        <li style="padding-bottom: 1 em;">Adobe Community Professional for ColdFusion</li>
+                        <li>Married 25 years, two grown children (still living with us)</li>
+                        <li>Unreformed DIY remodeler</li>
+                        <li>Passionate about craft beer! (should become obvious in a few minutes)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>My Journey to MVC...</h2>
+                    <ul>
+                        <li>Wrote/Maintained Procedural CFML apps 2002-2016
+                            <ul>
+                                <li>Mostly .CFM files</li>
+                                <li>Custom tags</li>
+                                <li>Some components (.CFCs)</li>
+                            </ul>
+                        </li>
+                        <li class="fragment" style="padding-top: 1em;">Complete overhaul of intranet map portal starting spring 2016
+                            <ul>
+                                <li>Rewrite CFML portion from scratch</li>
+                                <li>"We're going to do it right" = Go MVC</li>
+                                <li>Working prototype within 3 weeks</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Agenda</h2>
+                    <ul>
+                        <li>Prerequisites for this talk</li>
+                        <li>Brief review of procedural applications
+                            <ul>
+                                <li>Definition</li>
+                                <li>Sample procedural code</li>
+                                <li>Drawbacks</li>
+                            </ul>
+                        </li>
+                        <li>Introduction to Model-View-Controller concept
+                            <ul>
+                                <li>How it works</li>
+                                <li>MVC frameworks for ColdFusion</li>
+                                <li>Sample MVC code</li>
+                                <li>Pros/cons of MVC</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What Do I Need to Know?</h2>
+                    <ul>
+                        <li>CFML language (syntax, functions/tags, etc.)</li>
+                        <li>Basic understanding of components
+                            <ul>
+                                <li>How are they structured?</li>
+                                <li>How do I use them
+                                    <ul>
+                                        <li>CreateObject()</li>
+                                        <li>New </li>
+                                        <li>CFInvoke</li>
+                                        <li>CFObject</li>
+                                    </ul>
+                                </li>
+                                <li>ColdFusion request cycle</li>
+                                <li class="fragment" style="padding-top: 1em;">Also helpful:
+                                    <ul>
+                                        <li>CFScript syntax (similar to JavaScript syntax)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What Is a Procedural Application?</h2>
+                    <ul>
+                        <li>CFM page for each URL in application</li>
+                        <li>Pages execute from top to bottom</li>
+                        <li>Typically 100's of lines of code per page</li>
+                        <li>Mix of business logic and display code</li>
+                        <li>Maybe some code reuse via <span class="highlight-blue-static">&lt;cfinclude&gt;</span> or custom tags</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Disclaimer</h2>
+                    <blockquote><p>The code you are about to see is simplified for clarity.  It does not represent best practices, does not include security measures, and does not include user input validation/sanitation.--Me</p></blockquote>
+                </section>
+                <section>
+                    <h2>What Does a Procedural App Look Like?</h2>
+                    <img src="./images/showmecodez.jpg">
+                </section>
+                <section>
+                    <h2>Downside of Procedural Code</h2>
+                    <ul>
+                        <li>Increasingly hard to maintain, expecially as application evolves</li>
+                        <li>Hard to distribute work to teams</li>
+                        <li>Potentially lots of code duplication
+                            <ul>
+                                <li>Violates the DRY principle</li>
+                            </ul>
+                        </li>
+                        <li>Can't build an API from the business logic
+                            <ul>
+                                <li>Intertwined with display code</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Is There a Better Way?</h2>
+                    <ul>
+                        <li>YES!</li>
+                        <li class="fragment" style="padding-top: 1em;">MVC
+                            <ul class="fragment">
+                                <li class="fragment highlight-green">(You knew I was going to say that)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What Is MVC?</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Model-View-Controller design pattern</li>
+                            <li>Separates concerns (business logic vs. view code)</li>
+                            <li>Common pattern in OO languages</li>
+                            <li class="fragment">Usually leverage MVC framework
+                                <ul>
+                                    <li>Rails (Ruby)</li>
+                                    <li>Django (Python)</li>
+                                    <li>ASP.Net MVC (</li>
+                                    <li>Express/Sails (Node.js)</li>
+                                    <li>Laravel/CakePHP (PHP)</li>
+                                    <li>Spring (Java)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>Model Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Business logic</li>
+                            <li>Database interactions (CRUD)</li>
+                            <li>No external web service access</li>
+                            <li>Validation</li>
+                            <li style="padding-bottom: 1em;">Helper services</li>
+                            <li>Should not know anything about the framework <span class="fragment highlight-green">(including controllers and views)</span></li>
+                            <li>Responds to requests from the controller</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-model.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>View Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>User interface</li>
+                            <li>HTML/CSS/JavaScript</li>
+                            <li>Minimal server-side logic for display control</li>
+                            <li>NO business logic!!!
+                                <ul>
+                                    <li>No SQL code here!!!</li>
+                                </ul>
+                            </li>
+                            <li>Layouts and views</li>
+                            <li style="padding-top: 1em;">Should not know anything about the model</li>
+                            <li>Relies on controller to get data</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-view.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>Controller Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Controls the flow of the application</li>
+                            <li>Examines each incoming request (URL/FORM variables or path)</li>
+                            <li>Calls relevant business logic (model objects/components)</li>
+                            <li>Passes results from model to view</li>
+                            <li style="padding-top: 1em;">Minimal validation</li>
+                            <li>Short controller functions</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-controller.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>MVC in ColdFusion</h2>
+                    <ul>
+                        <li>MVC can be done without a framework
+                            <ul class="fragment">
+                                <li>Unless your hobby is reinventing the wheel, why would you?</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Frameworks offer lots of functionality you don't have to reinvent
+                            <ul>
+                                <li>Dependency Injection (DI)/Inversion of Control (IoC)</li>
+                                <li>URL Routes</li>
+                                <li>Layout/View templating</li>
+                                <li>Data rendering (JSON, XML, text, custom)</li>
+                                <li>Modules/Subsystems</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Frameworks often improve code organization</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>MVC Frameworks for ColdFusion</h2>
+                    <ul>
+                        <li>Framework-One (FW/1)</li>
+                        <li>ColdBox</li>
+                        <li>CFWheels
+                            <ul>
+                                <li>Follows Ruby on Rails paradigm</li>
+                            </ul>
+                        </li>
+                        <li class="fragment" style="padding-top:1em;">Some older MVC frameworks still in use
+                            <ul>
+                                <li>FuseBox</li>
+                                <li>Model-Glue</li>
+                                <li>Mach II</li>
+                                <li>FarCry Core</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What is Framework-One (FW/1)</h2>
+                    <ul>
+                        <li>Created by Sean Corfield</li>
+                        <li>Version 4.1 recently released</li>
+                        <li>Small, lightweight</li>
+                            <ul class="fragment">
+                                <li>MVC portion is one file, <em>one.cfc</em> (137KB)</li>
+                                <li>Two related files:
+                                    <ul>
+                                        <li><em>ioc.cfc</em> - Dependency Injection/Inversion of Control</li>
+                                        <li><em>aop.cfc</em> - Aspect-Oriented Programming</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Convention-Over-Configuration
+                    </ul>
+                </section>
+                <section>
+                    <h2>What is "Convention Over Configuration"</h2>
+                    <ul>
+                        <li>Structure application folders per recommendations and the framework figures out the rest</li>
+                        <li class="fragment">Only need to specify configuration settings to:
+                            <ul>
+                                <li>Override defaults</li>
+                                <li>Deviate from the recommended structure</li>
+                                <li>Deviate from the file naming conventions</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What the heck is "RC"?</h2>
+                    <ul>
+                        <li>RC variable = alias for request context, or request.context</li>
+                        <li>Sort of another scope (like application, session, request, etc.)</li>
+                        <li>Mechanism for passing data between framework, controller, and layouts/views</li>
+                        <li>FW/1 automatically populates RC with <span class="highlight-blue-static">URL</span> and <span class="highlight-blue-static">FORM</span> variables</li>
+                        <li>Write controller methods to insert anything else your layouts/views need</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What Does a FW/1 MVC App Look Like?</h2>
+                    <img src="./images/talkischeapshowmethecode.jpg">
+                </section>
+                <section>
+                    <h2>MVC - The Good and The Bad</h2>
+                    <div class="fragment" style="float:left; width:47%;">
+                        <h3>Pros</h3>
+                        <ul>
+                            <li>Promotes DRY (code reuse)</li>
+                            <li>Assists team efforts
+                                <ul>
+                                    <li>Different parts of model, controllers, views can be worked on simultaneously</li>
+                                </ul>
+                            </li>
+                            <li>Common pattern/terminology</li>
+                            <li>Enforces better code organization</li>
+                        </ul>
+                    </div>
+                    <div class="fragment" style="float:right; width:47%;">
+                        <h3>Cons</h3>
+                        <ul>
+                            <li>Have to learn some new concepts, even if already an excellen procedural programmer</li>
+                            <li>Might seem to end up with more files to manage
+                                <ul>
+                                    <li>But each file will be more focused and on-point</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h2>Migrating Legacy Apps</h2>
+                    <ul>
+                        <li>Don't have to "eat the elephant" all at once:
+                            <ul>
+                                <li class="fragment">Choose logical sections/modules of an app to migrate</li>
+                                <li class="fragment">Start new work in MVC pattern</li>
+                                <li class="fragment">Move code in phases
+                                    <ul>
+                                        <li>Move business logic into "fat controllers"</li>
+                                        <li>Move display code into layouts or layouts and views</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">MVC code can coexist with procedural code
+                            <ul>
+                                <li>With combination of configuration settings and web server rewrite rules</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Key Takeaways</h2>
+                    <ul>
+                        <li>MVC isn't as hard as it seems</li>
+                        <li>It will make application code maintenance easier for the future</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>MVC Framework Resources</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Docmentation and Downloads
+                                <ul>
+                                    <li>Framework-One
+                                        <ul>
+                                            <li>Docs: <a href="https://framework-one.github.io/">https://framework-one.github.io/</a></li>
+                                            <li>Download: <a href="https://github.com/framework-one/fw1/">https://github.com/framework-one/fw1/</a></li>
+                                            <li>CommandBox installation: <pre><code>box install fw1</code></pre></li>
+                                        </ul>
+                                    </li>
+                                    <li style="padding-top: 0.5em;">ColdBox
+                                        <ul>
+                                            <li>Docs/Download: <a href="https://www.coldbox.org">https://www.coldbox.org</a></li>
+                                            <li>
+                                                CommandBox installation: <pre><code>box coldbox create app myApp</code></pre>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <ul>
+                            <li>Discussion Groups
+                                <ul>
+                                    <li><a href="https://groups.google.com/forum/#!forum/framework-one">Framework-One Google Group</a></li>
+                                    <li><a href="https://groups.google.com/forum/#!forum/coldbox">ColdBox Google Group</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li style="padding-top: 1em;">Real-Time Assistance
+                                <ul>
+                                    <li><a href="http://cfml-slack.herokuapp.com/">CFML Slack Team</a>
+                                        <ul>
+                                            <li>FW/1 Channel</li>
+                                            <li>Box-Products Channel</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h2>Thank You!!!</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Contact Me:
+                                <ul>
+                                    <li>Email: <a href="mailto:carl.vonstetten1@gmail.com">carl.vonstetten1@gmail.com</a></li>
+                                    <li>Twitter: <a href="https://twitter.com/cfvonner">@cfvonner</a></li>
+                                    <li>GitHub: <a href="https://github.com/cfvonner">cfvonner</a></li>
+                                    <li>CFML Team on Slack: <a href="http://cfml-slack.herokuapp.com/">@cfvonner</a></li>
+                                </ul>
+                            </li>
+                            <li style="padding-top: 2em;">
+                                Code/Slides: <a href="https://github.com/cfvonner/Intro-To-MVC-ColdFusion">https://github.com/cfvonner/Intro-To-MVC-ColdFusion</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/confusedpanda-300px.png" width="400px">   
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <script src="../assets/reveal.js/lib/js/head.min.js"></script>
+        <script src="../assets/reveal.js/js/reveal.js"></script>
+        <script src="../assets/js/jquery-2.2.2.min.js"></script>
+
+        <style type="text/css">
+            #footer-left {
+            position: absolute;
+            bottom: 1%;
+            left: 1%;
+            font-size: 0.6em;
+            opacity: 0.6;
+            }
+        </style>
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                dependencies: [
+                    { src: '../assets/reveal.js/plugin/markdown/marked.js' },
+                    { src: '../assets/reveal.js/plugin/markdown/markdown.js' },
+                    { src: '../assets/reveal.js/plugin/notes/notes.js', async: true },
+                    { src: '../assets/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ],
+                width: "100%",
+                height: "100%",
+                margin: 0.1,
+                minScale: 1,
+                maxScale: 1,
+                slideNumber: true
+            });
+
+            Reveal.configure({ pdfMaxPagesPerSlide: 1 });
+
+            var footer = $('#footer').html();
+            if ( window.location.search.match( /print-pdf/gi ) ) {
+                Reveal.addEventListener( 'ready', function( event ) {
+                    $('.slide-background').append(footer);
+                });
+            }
+            else {
+                $('div.reveal').append(footer);
+            }
+        </script>
+    </body>
+</html>

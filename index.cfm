@@ -25,6 +25,9 @@
                     <li>
                         <a href="/MVCAppFW1/">MVC Demo App (FW/1)</a>
                     </li>
+                    <li style="padding-top: 2em;">
+                        <a href="/slides/" target="_blank">Presentation Slides</a>
+                    </li>
                 </ul>
             </div>
         </div>

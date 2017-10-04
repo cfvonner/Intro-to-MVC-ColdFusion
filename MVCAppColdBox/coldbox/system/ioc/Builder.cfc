@@ -127,14 +127,10 @@ TODO: update dsl consistency, so it is faster.
 						  argumentcollection="#constructorArgs#">
 
 				<cfcatch type="any">
-					<cfscript>
-						// Controlled exception
-						throw( 
-							type="Builder.BuildCFCDependencyException",
-							message="Error building: #thisMap.getName()# -> #cfcatch.message#.",
-							detail="DSL: #thisMap.getDSL()#, Path: #thisMap.getPath()#, Error Location: #cfcatch.tagContext[ 1 ].template#:#cfcatch.tagContext[ 1 ].line#"
-						);
-					</cfscript>
+					<!--- Controlled Exception --->
+					<cfthrow message="Error building: #thisMap.getName()# -> #cfcatch.message# #cfcatch.detail# with constructor arguments: #constructorArgs.toString()#"
+							 detail="Mapping: #thisMap.getMemento().toString()#, Stacktrace: #cfcatch.stacktrace#"
+							 type="Builder.BuildCFCDependencyException">
 				</cfcatch>
 			</cftry>
 		</cfif>
@@ -155,10 +151,7 @@ TODO: update dsl consistency, so it is faster.
 
 			// check if factory exists, else throw exception
 			if( NOT instance.injector.containsInstance( factoryName ) ){
-				throw( 
-					message="The factory mapping: #factoryName# is not registered with the injector", 
-					type="Builder.InvalidFactoryMappingException" 
-				);
+				throw(message="The factory mapping: #factoryName# is not registered with the injector",type="Builder.InvalidFactoryMappingException");
 			}
     		// get Factory mapping
 			oFactory = instance.injector.getInstance( factoryName );
@@ -192,9 +185,8 @@ TODO: update dsl consistency, so it is faster.
 
 			// Loop Over Arguments
 			for(x = 1; x <= DIArgsLen; x++){
-				var thisDIArg = DIArgs[ x ];
 				// do we have javacasting?
-				if( !isNull( thisDIArg.javaCast ) ){
+				if( structKeyExists(DIArgs[x],"javaCast") ){
 					ArrayAppend(args, "javaCast(DIArgs[#x#].javaCast, DIArgs[#x#].value)");
 				}
 				else{
@@ -229,37 +221,37 @@ TODO: update dsl consistency, so it is faster.
 
 			// Loop Over Arguments
 			for(x=1;x lte DIArgsLen; x=x+1){
-				var thisDIArg = DIArgs[ x ];
+
 				// Is value set in mapping? If so, add it and continue
-				if( !isNull( thisDIArg.value ) ){
-					args[ thisDIArg.name ] = thisDIArg.value;
+				if( structKeyExists(DIArgs[x],"value") ){
+					args[ DIArgs[x].name ] = DIArgs[x].value;
 					continue;
 				}
 
 				// Is it by DSL construction? If so, add it and continue, if not found it returns null, which is ok
-				if( !isNull( thisDIArg.dsl ) ){
-					args[ thisDIArg.name ] = buildDSLDependency( definition=thisDIArg, targetID=thisMap.getName(), targetObject=arguments.targetObject );
+				if( structKeyExists(DIArgs[x],"dsl") ){
+					args[ DIArgs[x].name ] = buildDSLDependency( definition=DIArgs[x], targetID=thisMap.getName(), targetObject=arguments.targetObject );
 					continue;
 				}
 
 				// If we get here then it is by ref id, so let's verify it exists and optional
-				if( len(instance.injector.containsInstance( thisDIArg.ref )) ){
-					args[ thisDIArg.name ] = instance.injector.getInstance(name=thisDIArg.ref);
+				if( len(instance.injector.containsInstance( DIArgs[x].ref )) ){
+					args[ DIArgs[x].name ] = instance.injector.getInstance(name=DIArgs[x].ref);
 					continue;
 				}
 
 				// Not found, so check if it is required
-				if( thisDIArg.required ){
+				if( DIArgs[x].required ){
 					// Log the error
-					instance.log.error("Target: #thisMap.getName()# -> Argument reference not located: #DIArgs[ x ].name# for mapping: #arguments.mapping.getMemento().toString()#", thisDIArg);
+					instance.log.error("Target: #thisMap.getName()# -> Argument reference not located: #DIArgs[x].name# for mapping: #arguments.mapping.getMemento().toString()#", DIArgs[x]);
 					// not found but required, then throw exception
-					throw(message="Argument reference not located: #thisDIArg.name#",
-									  		 detail="Injecting: #thisMap.getMemento().toString()#. The argument details are: #thisDIArg.toString()#.",
+					throw(message="Argument reference not located: #DIArgs[x].name#",
+									  		 detail="Injecting: #thisMap.getMemento().toString()#. The argument details are: #DIArgs[x].toString()#.",
 									  		 type="Injector.ArgumentNotFoundException");
 				}
 				// else just log it via debug
 				else if( instance.log.canDebug() ){
-					instance.log.debug("Target: #thisMap.getName()# -> Argument reference not located: #thisDIArg.name# for mapping: #arguments.mapping.getMemento().toString()#", thisDIArg);
+					instance.log.debug("Target: #thisMap.getName()# -> Argument reference not located: #DIArgs[x].name# for mapping: #arguments.mapping.getMemento().toString()#", DIArgs[x]);
 				}
 
 			}
@@ -275,11 +267,11 @@ TODO: update dsl consistency, so it is faster.
 		<cfscript>
     		var argStruct 	= {};
 			var DIArgs 		= arguments.mapping.getDIConstructorArguments();
-			var DIArgsLen   = arraylen( DIArgs );
+			var DIArgsLen   = arraylen(DIArgs);
 
 			// Loop Over Arguments for wsdl args
-			for(var x=1; x lte DIArgsLen; x++ ){
-				argStruct[ DIArgs[ x ].name ] = DIArgs[ x ].value;
+			for(x=1;x lte DIArgsLen; x=x+1){
+				argStruct[ DIArgs[x].name ] = DIArgs[x].value;
 			}
 
 			// Do we ahve overrides
@@ -287,7 +279,7 @@ TODO: update dsl consistency, so it is faster.
 				structAppend(argStruct, arguments.initArguments,true);
 			}
 
-			return createObject( "webservice", arguments.mapping.getPath(), argStruct );
+			return createObject("webservice", arguments.mapping.getPath(), argStruct );
 		</cfscript>
     </cffunction>
 
@@ -336,7 +328,7 @@ TODO: update dsl consistency, so it is faster.
 			// Some namespaces requires the ColdBox context, if not found, an exception is thrown.
 			switch( DSLNamespace ){
 				// ColdBox Context DSL
-				case "coldbox" : {
+				case "ocm" : case "coldbox" : {
 					refLocal.dependency = instance.coldboxDSL.process(argumentCollection=arguments); break;
 				}
 				// CacheBox Context DSL

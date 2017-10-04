@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 * www.ortussolutions.com
 * ---
@@ -41,7 +41,7 @@ component extends="testbox.system.compat.framework.TestCase"  accessors="true"{
 	* @return BaseTestCase
 	*/
 	function metadataInspection(){
-		var md = new coldbox.system.core.util.Util().getInheritedMetadata( this );
+		var md = getMetadata( this );
 		// Inspect for appMapping annotation
 		if( structKeyExists( md, "appMapping" ) ){
 			variables.appMapping = md.appMapping;
@@ -123,7 +123,6 @@ component extends="testbox.system.compat.framework.TestCase"  accessors="true"{
 			}
 			// remove context
 			getController().getRequestService().removeContext();
-			getPageContext().getResponse().reset();
 		}
 	}
 
@@ -156,15 +155,7 @@ component extends="testbox.system.compat.framework.TestCase"  accessors="true"{
 	*/
 	function reset( boolean clearMethods=false, decorator ){
 		structDelete( application, getColdboxAppKey() );
-		
-		if( !structIsEmpty( request ) ){
-			lock type="exclusive" scope="request" timeout=10{
-				if( !structIsEmpty( request ) ){
-					structClear( request );
-				}
-			}
-		}
-
+		structClear( request );
 		return this;
 	}
 
@@ -352,11 +343,6 @@ component extends="testbox.system.compat.framework.TestCase"  accessors="true"{
         	// If the route is for the home page, use the default event in the config/ColdBox.cfc
         	if ( arguments.route == "/" ){
         		arguments.event = getController().getSetting( "defaultEvent" );
-			getRequestContext().setValue( getRequestContext().getEventName(), arguments.event );
-			prepareMock( getInterceptor( "SES" ) ).$( "getCleanedPaths", {
-				pathInfo = arguments.route,
-				scriptName = ""
-			} );
         		arguments.route = "";
         	}
 
@@ -426,12 +412,8 @@ component extends="testbox.system.compat.framework.TestCase"  accessors="true"{
 						renderedContent = cbController.getDataMarshaller().marshallData(argumentCollection=renderData);
 					}
 					// If we have handler results save them in our context for assertions
-					else if ( 
-						!isNull( handlerResults ) 
-						&&
-						isSimpleValue( handlerResults )
-					){
-						requestContext.setValue("cbox_handler_results", handlerResults);
+					else if ( isDefined( "handlerResults" ) ){
+						requestContext.setValue( "cbox_handler_results", handlerResults);
 						renderedContent = handlerResults;
 					}
 					// render layout/view pair

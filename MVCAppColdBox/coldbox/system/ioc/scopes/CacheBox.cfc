@@ -38,15 +38,13 @@ Description :
 		<cfset refLocal.target = cacheProvider.get( cacheKey )>
 
 		<!--- Verify it --->
-		<cfif isNull( refLocal.target ) >
+		<cfif NOT structKeyExists(refLocal, "target")>
 			<!--- Lock it --->
 			<cflock name="WireBox.#instance.injector.getInjectorID()#.CacheBoxScope.#arguments.mapping.getName()#" type="exclusive" timeout="30" throwontimeout="true">
 			<cfscript>
 				// Double get just in case of race conditions
 				refLocal.target = cacheProvider.get( cacheKey );
-				if( !isNull( refLocal.target ) ){
-					return refLocal.target;
-				}
+				if( structKeyExists(refLocal, "target") ){ return refLocal.target; }
 				
 				// some nice debug info.
 				if( instance.log.canDebug() ){
