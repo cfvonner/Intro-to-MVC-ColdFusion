@@ -105,7 +105,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="brewery-list.cfm">
+                            <a href="beer-list.cfm">
                                 Beer List
                             </a>
                         </li>
