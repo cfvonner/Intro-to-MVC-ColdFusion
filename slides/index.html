@@ -14,7 +14,7 @@
 
         <!-- Printing and PDF exports -->
         <script>
-            variables.link = document.createElement( 'link' );
+            var link = document.createElement( 'link' );
             link.rel = 'stylesheet';
             link.type = 'text/css';
             link.href = window.location.search.match( /print-pdf/gi ) 
@@ -189,8 +189,7 @@
                             </li>
                         </ul>
                     </div>
-
-                        <div style="float:right; width:47%;">
+                    <div style="float:right; width:47%;">
                         <img src="./images/MVC.png">
                     </div>
                 </section>
@@ -243,7 +242,7 @@
                     <ul>
                         <li>Created by Sean Corfield in 2009</li>
                         <li>Version 4.1 recently released</li>
-                        <li>Small, lightweight</li>
+                        <li>Small, lightweight
                             <ul class="fragment">
                                 <li>MVC portion is one file, <em>one.cfc</em> (137KB)</li>
                                 <li class="fragment">Two related files:
@@ -345,10 +344,10 @@
                 <section>
                     <h2>Anatomy of a URL</h2>
                     <p>
-                        https://localhost/index.cfm?<span class="fragment highlight-green" data-fragment-index="2">action=</span><span class="fragment highlight-blue" data-fragment-index="2">section</span>.<span class="fragment highlight-red" data-fragment-index="2">item</span>&somevariables.foo
+                        https://localhost/index.cfm?<span class="fragment highlight-green" data-fragment-index="1">action=</span><span class="fragment highlight-blue" data-fragment-index="1">section</span>.<span class="fragment highlight-red" data-fragment-index="1">item</span>&somevariables.foo
                     </p>
                     <table>
-                        <tr class="fragment highlight-green-static" data-fragment-index="4">
+                        <tr class="fragment highlight-green-static" data-fragment-index="2">
                             <td>action</td>
                             <td>
                                 <ul>
@@ -356,7 +355,7 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr class="fragment highlight-blue-static" data-fragment-index="5">
+                        <tr class="fragment highlight-blue-static" data-fragment-index="3">
                             <td style="vertical-align: top;">section</td>
                             <td>
                                 <ul>
@@ -365,7 +364,7 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr class="fragment highlight-red-static" data-fragment-index="6">
+                        <tr class="fragment highlight-red-static" data-fragment-index="4">
                             <td style="vertical-align: top;">item</td>
                             <td>
                                 <ul>
@@ -493,7 +492,13 @@
                                         <ul>
                                             <li>Docs: <a href="https://framework-one.github.io/">https://framework-one.github.io/</a></li>
                                             <li>Download: <a href="https://github.com/framework-one/fw1/">https://github.com/framework-one/fw1/</a></li>
-                                            <li>CommandBox installation: <pre><code>box install fw1</code></pre></li>
+                                            <li>
+                                                CommandBox installation:
+                                                <pre><code data-trim>
+                                                    install fw1-commands // Only have to do this once
+                                                    fw1 create app MyApp basic
+                                                </code></pre>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li style="padding-top: 0.5em;">ColdBox
@@ -513,8 +518,7 @@
                             <li>Discussion Groups
                                 <ul>
                                     <li><a href="https://groups.google.com/forum/#!forum/framework-one">Framework-One Google Group</a></li>
-                                    <li><a href="https://groups.google.com/forum/#!forum/coldbox">ColdBox Google Group</a>
-                                    </li>
+                                    <li><a href="https://groups.google.com/forum/#!forum/coldbox">ColdBox Google Group</a></li>
                                 </ul>
                             </li>
                             <li style="padding-top: 1em;">Real-Time Assistance
@@ -573,9 +577,6 @@
             // - https://github.com/hakimel/reveal.js#dependencies
             Reveal.initialize({
                 dependencies: [
-                    { src: '../assets/reveal.js/plugin/markdown/marked.js' },
-                    { src: '../assets/reveal.js/plugin/markdown/markdown.js' },
-                    { src: '../assets/reveal.js/plugin/notes/notes.js', async: true },
                     { src: '../assets/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
                 ],
                 width: "100%",
