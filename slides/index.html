@@ -14,7 +14,7 @@
 
         <!-- Printing and PDF exports -->
         <script>
-            var link = document.createElement( 'link' );
+            variables.link = document.createElement( 'link' );
             link.rel = 'stylesheet';
             link.type = 'text/css';
             link.href = window.location.search.match( /print-pdf/gi ) 
@@ -42,7 +42,7 @@
                 <section>
                     <h2>About Me</h2>
                     <ul>
-                        <li>GIS Analyst for Central San (<a href="http://www.centralsan.org" target="_blank">www.centralsan.org</a>) in Northern California
+                        <li>Geographic Information Systems (GIS) Analyst for a water resources/reclamation agencyin in Northern California
                             <ul>
                                 <li>Working with ColdFusion since 2002 (CF 4.5)</li>
                                 <li>Lots of spatial and non-spatial data modeling, data management, intranet application development</li>
@@ -54,7 +54,6 @@
                             </ul>
                         </li>
                         <li style="padding-bottom: 1 em;">Adobe Community Professional for ColdFusion</li>
-                        <li>Married 25 years, two grown children (still living with us)</li>
                         <li>Unreformed DIY remodeler</li>
                         <li>Passionate about craft beer! (should become obvious in a few minutes)</li>
                     </ul>
@@ -91,9 +90,9 @@
                         </li>
                         <li>Introduction to Model-View-Controller concept
                             <ul>
-                                <li>How it works</li>
                                 <li>MVC frameworks for ColdFusion</li>
                                 <li>Sample MVC code</li>
+                                <li>How MVC works</li>
                                 <li>Pros/cons of MVC</li>
                             </ul>
                         </li>
@@ -165,7 +164,7 @@
                         <li>YES!</li>
                         <li class="fragment" style="padding-top: 1em;">MVC
                             <ul class="fragment">
-                                <li class="fragment highlight-green">(You knew I was going to say that)</li>
+                                <li class="highlight-green-static">(You knew I was going to say that)</li>
                             </ul>
                         </li>
                     </ul>
@@ -175,13 +174,13 @@
                     <div style="float:left; width:47%;">
                         <ul>
                             <li>Model-View-Controller design pattern</li>
-                            <li>Separates concerns (business logic vs. view code)</li>
-                            <li>Common pattern in OO languages</li>
+                            <li class="fragment">Separates concerns (business logic vs. view code)</li>
+                            <li class="fragment">Common pattern in OO languages</li>
                             <li class="fragment">Usually leverage MVC framework
                                 <ul>
                                     <li>Rails (Ruby)</li>
                                     <li>Django (Python)</li>
-                                    <li>ASP.Net MVC (</li>
+                                    <li>ASP.Net MVC</li>
                                     <li>Express/Sails (Node.js)</li>
                                     <li>Laravel/CakePHP (PHP)</li>
                                     <li>Spring (Java)</li>
@@ -189,62 +188,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div style="float:right; width:47%;">
+
+                        <div style="float:right; width:47%;">
                         <img src="./images/MVC.png">
-                    </div>
-                </section>
-                <section>
-                    <h2>Model Layer</h2>
-                    <div style="float:left; width:47%;">
-                        <ul>
-                            <li>Business logic</li>
-                            <li>Database interactions (CRUD)</li>
-                            <li>No external web service access</li>
-                            <li>Validation</li>
-                            <li style="padding-bottom: 1em;">Helper services</li>
-                            <li>Should not know anything about the framework <span class="fragment highlight-green">(including controllers and views)</span></li>
-                            <li>Responds to requests from the controller</li>
-                        </ul>
-                    </div>
-                    <div style="float:right; width:47%;">
-                        <img src="./images/MVC-model.png">
-                    </div>
-                </section>
-                <section>
-                    <h2>View Layer</h2>
-                    <div style="float:left; width:47%;">
-                        <ul>
-                            <li>User interface</li>
-                            <li>HTML/CSS/JavaScript</li>
-                            <li>Minimal server-side logic for display control</li>
-                            <li>NO business logic!!!
-                                <ul>
-                                    <li>No SQL code here!!!</li>
-                                </ul>
-                            </li>
-                            <li>Layouts and views</li>
-                            <li style="padding-top: 1em;">Should not know anything about the model</li>
-                            <li>Relies on controller to get data</li>
-                        </ul>
-                    </div>
-                    <div style="float:right; width:47%;">
-                        <img src="./images/MVC-view.png">
-                    </div>
-                </section>
-                <section>
-                    <h2>Controller Layer</h2>
-                    <div style="float:left; width:47%;">
-                        <ul>
-                            <li>Controls the flow of the application</li>
-                            <li>Examines each incoming request (URL/FORM variables or path)</li>
-                            <li>Calls relevant business logic (model objects/components)</li>
-                            <li>Passes results from model to view</li>
-                            <li style="padding-top: 1em;">Minimal validation</li>
-                            <li>Short controller functions</li>
-                        </ul>
-                    </div>
-                    <div style="float:right; width:47%;">
-                        <img src="./images/MVC-controller.png">
                     </div>
                 </section>
                 <section>
@@ -255,7 +201,7 @@
                                 <li>Unless your hobby is reinventing the wheel, why would you?</li>
                             </ul>
                         </li>
-                        <li class="fragment">Frameworks offer lots of functionality you don't have to reinvent
+                        <li class="fragment" style="padding-top: 0.5em;">Frameworks offer lots of functionality you don't have to reinvent
                             <ul>
                                 <li>Dependency Injection (DI)/Inversion of Control (IoC)</li>
                                 <li>URL Routes</li>
@@ -264,40 +210,44 @@
                                 <li>Modules/Subsystems</li>
                             </ul>
                         </li>
-                        <li class="fragment">Frameworks often improve code organization</li>
+                        <li class="fragment" style="padding-top: 0.5em;">Frameworks often improve code organization</li>
                     </ul>
                 </section>
                 <section>
                     <h2>MVC Frameworks for ColdFusion</h2>
                     <ul>
-                        <li>Framework-One (FW/1)</li>
-                        <li>ColdBox</li>
-                        <li>CFWheels
-                            <ul>
-                                <li>Follows Ruby on Rails paradigm</li>
-                            </ul>
+                        <li class="fragment highlight-green" data-fragment-index="3">
+                            Framework-One (FW/1)
                         </li>
-                        <li class="fragment" style="padding-top:1em;">Some older MVC frameworks still in use
-                            <ul>
-                                <li>FuseBox</li>
-                                <li>Model-Glue</li>
-                                <li>Mach II</li>
-                                <li>FarCry Core</li>
-                            </ul>
-                        </li>
+                        <div class="fragment fade-out" data-fragment-index="2">
+                            <li>ColdBox</li>
+                            <li>CFWheels
+                                <ul>
+                                    <li>Follows Ruby on Rails paradigm</li>
+                                </ul>
+                            </li>
+                            <li class="fragment" data-fragment-index="1" style="padding-top:1em;">Some older MVC frameworks still in use
+                                <ul>
+                                    <li>FuseBox</li>
+                                    <li>Model-Glue</li>
+                                    <li>Mach II</li>
+                                    <li>FarCry Core</li>
+                                </ul>
+                            </li>
+                        </div>
                     </ul>
                 </section>
                 <section>
                     <h2>What is Framework-One (FW/1)</h2>
                     <ul>
-                        <li>Created by Sean Corfield</li>
+                        <li>Created by Sean Corfield in 2009</li>
                         <li>Version 4.1 recently released</li>
                         <li>Small, lightweight</li>
                             <ul class="fragment">
                                 <li>MVC portion is one file, <em>one.cfc</em> (137KB)</li>
-                                <li>Two related files:
+                                <li class="fragment">Two related files:
                                     <ul>
-                                        <li><em>ioc.cfc</em> - Dependency Injection/Inversion of Control</li>
+                                        <li><em>ioc.cfc</em> - (aka DI/1) Dependency Injection/Inversion of Control</li>
                                         <li><em>aop.cfc</em> - Aspect-Oriented Programming</li>
                                     </ul>
                                 </li>
@@ -320,18 +270,160 @@
                     </ul>
                 </section>
                 <section>
+                    <h2>Model Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Business logic
+                                <ul>
+                                    <li class="fragment" data-fragment-index="1">Database interactions (CRUD)</li>
+                                    <li class="fragment" data-fragment-index="2">SOAP/REST service calls</li>
+                                    <li class="fragment" data-fragment-index="3">File system interactions</li>
+                                    <li class="fragment" data-fragment-index="4">Helper Services</li>
+                                </ul>
+                            </li>
+                            <li class="fragment" data-fragment-index="5">Validation</li>
+                            <li class="fragment" data-fragment-index="6">Responds to requests from controllers</li>
+                            <li class="fragment" data-fragment-index="7">Should not know anything about the framework <span class="highlight-green-static">(including controllers and views)</span>*</li>
+                            <li class="fragment" data-fragment-index="9">Not accessible from web browser</li>
+                        </ul>
+                        <p class="fragment" data-fragment-index="8" style="font-size: 0.7em; text-align: left;">
+                            * Some exceptions: DI/IOC framework methods and helper modules loaded by DI/IOC.
+                        </p>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-model.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>Controller Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Controls the flow of the application</li>
+                            <li class="fragment">Examines each incoming request (URL/FORM scope variables or path)</li>
+                            <li class="fragment">Calls relevant business logic (model objects/components)</li>
+                            <li class="fragment">Places results from business logic into "RC" object for layouts/views</li>
+                            <li class="fragment" style="padding-top: 1em;">Minimal validation</li>
+                            <li class="fragment">Short controller functions</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-controller.png">
+                    </div>
+                </section>
+                <section>
+                    <h2>View Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>User interface</li>
+                            <li class="fragment">HTML/CSS/JavaScript</li>
+                            <li class="fragment">Minimal CFML logic for display control</li>
+                            <li class="fragment">NO business logic!!!
+                                <ul>
+                                    <li class="fragment highlight-red-static">No SQL code here!!!</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">Layouts and views</li>
+                            <li class="fragment" style="padding-top: 1em;">Should not know anything about the model</li>
+                            <li class="fragment">Relies on controller to put required data in "RC"</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-view.png">
+                    </div>
+                </section>
+                <section>
                     <h2>What the heck is "RC"?</h2>
                     <ul>
-                        <li>RC variable = alias for request context, or request.context</li>
-                        <li>Sort of another scope (like application, session, request, etc.)</li>
-                        <li>Mechanism for passing data between framework, controller, and layouts/views</li>
-                        <li>FW/1 automatically populates RC with <span class="highlight-blue-static">URL</span> and <span class="highlight-blue-static">FORM</span> variables</li>
-                        <li>Write controller methods to insert anything else your layouts/views need</li>
+                        <li>RC object = alias for request context, or request.context</li>
+                        <li class="fragment">Sort of another scope (like Application, Session, Request, etc.)</li>
+                        <li class="fragment">Mechanism for passing data between framework, controller, and views</li>
+                        <li class="fragment">FW/1 automatically populates RC with URL and Form variables</li>
+                        <li class="fragment">Write controller methods to insert anything else your layouts/views need</li>
                     </ul>
+                </section>
+                <section>
+                    <h2>Anatomy of a URL</h2>
+                    <p>
+                        https://localhost/index.cfm?<span class="fragment highlight-green" data-fragment-index="2">action=</span><span class="fragment highlight-blue" data-fragment-index="2">section</span>.<span class="fragment highlight-red" data-fragment-index="2">item</span>&somevariables.foo
+                    </p>
+                    <table>
+                        <tr class="fragment highlight-green-static" data-fragment-index="4">
+                            <td>action</td>
+                            <td>
+                                <ul>
+                                    <li>FW/1 looks for this URL parameter to decide what to do</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-blue-static" data-fragment-index="5">
+                            <td style="vertical-align: top;">section</td>
+                            <td>
+                                <ul>
+                                    <li>Name of controller to call (/controllers/<em>section</em>.cfc)</li>
+                                    <li>If a <em>section</em>.cfm file is found in /layouts, it will be applied before the default layout.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-red-static" data-fragment-index="6">
+                            <td style="vertical-align: top;">item</td>
+                            <td>
+                                <ul>
+                                    <li>Name of method (function) to call in /controllers/<em>section</em>.cfc</li>
+                                    <li>FW/1 will look for this view: /views/<em>section</em>/<em>item</em>.cfm</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
                 </section>
                 <section>
                     <h2>What Does a FW/1 MVC App Look Like?</h2>
                     <img src="./images/talkischeapshowmethecode.jpg">
+                </section>
+                <section>
+                    <h2>A Note About Dependency Injection (DI)</h2>
+                    <p>Depenency Injection simplifies managing dependencies</p>
+                    <div class="fragment" style="float:left; width:49%;">
+                        <pre><code data-trim style="font-size:0.9em;">
+                            // This component depends on object "foo", which 
+                            // depends on objects "bar" and "baz"
+                            component {
+                                public myObject function init( ) {
+                                    var bar = new model.services.bar();
+                                    var baz = new model.services.baz();
+                                    variables.fooService = new model.services.foo( bar, baz );
+                                }
+                                // ...other functions/methods
+                            }
+                        </code></pre>
+                        <pre><code data-trim style="font-size:0.9em;">
+                            // This is foo.cfc
+                            component {
+                                public foo function init ( bar, baz ) {
+                                    variables.barService = arguments.bar;
+                                    variables.bazService = arguments.baz;
+                                }
+                                // ...other functions/methods
+                            }
+                        </code></pre>
+                    </div>
+                    <div class="fragment" style="float:right; width:49%;">
+                        <pre><code data-trim style="font-size:0.9em;">
+                            // This component depends on object "foo", which 
+                            // depends on objects "bar" and "baz"
+                            component {
+                                property fooService;
+                                ...
+                            }
+                        </code></pre>
+                        <pre><code data-trim style="font-size:0.9em;">
+                            // This is foo.cfc
+                            component {
+                                property barService;
+                                property bazService;
+                                ...
+                            }
+                        </code></pre>
+                    </div>
                 </section>
                 <section>
                     <h2>MVC - The Good and The Bad</h2>
@@ -494,7 +586,7 @@
 
             Reveal.configure({ pdfMaxPagesPerSlide: 1 });
 
-            var footer = $('#footer').html();
+            variables.footer = $('#footer').html();
             if ( window.location.search.match( /print-pdf/gi ) ) {
                 Reveal.addEventListener( 'ready', function( event ) {
                     $('.slide-background').append(footer);
