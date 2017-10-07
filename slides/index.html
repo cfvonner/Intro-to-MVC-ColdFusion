@@ -145,17 +145,18 @@
                     <h2>Downside of Procedural Code</h2>
                     <ul>
                         <li>Increasingly hard to maintain, expecially as application evolves</li>
-                        <li>Hard to distribute work to teams</li>
-                        <li>Potentially lots of code duplication
+                        <li class="fragment">Hard to distribute work to teams</li>
+                        <li class="fragment">Potentially lots of code duplication
                             <ul>
                                 <li>Violates the DRY principle</li>
                             </ul>
                         </li>
-                        <li>Can't build an API from the business logic
+                        <li class="fragment">Can't build an API from the business logic
                             <ul>
                                 <li>Intertwined with display code</li>
                             </ul>
                         </li>
+                        <li class="fragment">Can't perform automated unit tests on the business logic</li>
                     </ul>
                 </section>
                 <section>
@@ -334,7 +335,7 @@
                 <section>
                     <h2>What the heck is "RC"?</h2>
                     <ul>
-                        <li>RC object = alias for request context, or request.context</li>
+                        <li>RC struct = alias for request context</li>
                         <li class="fragment">Sort of another scope (like Application, Session, Request, etc.)</li>
                         <li class="fragment">Mechanism for passing data between framework, controller, and views</li>
                         <li class="fragment">FW/1 automatically populates RC with URL and Form variables</li>
@@ -438,6 +439,7 @@
                             </li>
                             <li>Common pattern/terminology</li>
                             <li>Enforces better code organization</li>
+                            <li>Business logic is now testable (Unit Tests/TDD/BDD)</li>
                         </ul>
                     </div>
                     <div class="fragment" style="float:right; width:47%;">
