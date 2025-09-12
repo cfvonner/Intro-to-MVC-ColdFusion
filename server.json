@@ -5,9 +5,11 @@
     },
     "web":{
         "rewrites":{
-            "enable":true,
-            "config":"customurlrewrite.xml"
+            "enable":true
         },
+        "rules":[
+            "regex-nocase('^\\/(MVCApp.+?)\\/(.+)$') -> rewrite( '/\\${1}/index.cfm/\\${2}' )"
+        ],
         "http":{
             "port":8080
         }
