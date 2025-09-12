@@ -6,27 +6,18 @@
 
         <title>Intro To MVC</title>
 
-        <link rel="stylesheet" href="../assets/reveal.js/css/reveal.css">
-        <link rel="stylesheet" href="../assets/reveal.js/css/theme/leagueCustom.css">
+        <link rel="stylesheet" href="../assets/reveal.js/dist/reset.css">
+        <link rel="stylesheet" href="../assets/reveal.js/dist/reveal.css">
+        <link rel="stylesheet" href="../assets/reveal.js/dist/theme/league-custom.css">
 
         <!-- Theme used for syntax highlighting of code -->
-        <link rel="stylesheet" href="../assets/reveal.js/lib/css/zenburn.css">
+        <link rel="stylesheet" href="../assets/reveal.js/plugin/highlight/zenburn.css">
 
-        <!-- Printing and PDF exports -->
-        <script>
-            var link = document.createElement( 'link' );
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = window.location.search.match( /print-pdf/gi ) 
-                ? '../assets/reveal.js/css/print/pdf.css' 
-                : '../assets/reveal.js/css/print/paper.css';
-            document.getElementsByTagName( 'head' )[0].appendChild( link );
-        </script>
     </head>
     <body>
         <div id="hidden" style="display:none;">
             <div id="footer">
-                <div id="footer-left">
+                <div class="footer-left">
                     Carl Von Stetten / <a href="https://twitter.com/cfvonner">@cfvonner</a>
                 </div>
             </div>
@@ -144,7 +135,7 @@
                 <section>
                     <h2>Downside of Procedural Code</h2>
                     <ul>
-                        <li>Increasingly hard to maintain, expecially as application evolves</li>
+                        <li>Increasingly hard to maintain, especially as application evolves</li>
                         <li class="fragment">Hard to distribute work to teams</li>
                         <li class="fragment">Potentially lots of code duplication
                             <ul>
@@ -543,7 +534,7 @@
                                     <li>Email: <a href="mailto:carl.vonstetten1@gmail.com">carl.vonstetten1@gmail.com</a></li>
                                     <li>Twitter: <a href="https://twitter.com/cfvonner">@cfvonner</a></li>
                                     <li>GitHub: <a href="https://github.com/cfvonner">cfvonner</a></li>
-                                    <li>CFML Team on Slack: <a href="http://cfml-slack.herokuapp.com/">@cfvonner</a></li>
+                                    <li>CFML Team on Slack: <a href="http://cfml-slack.net/">@cfvonner</a></li>
                                 </ul>
                             </li>
                             <li style="padding-top: 2em;">
@@ -558,45 +549,42 @@
             </div>
         </div>
 
-        <script src="../assets/reveal.js/lib/js/head.min.js"></script>
-        <script src="../assets/reveal.js/js/reveal.js"></script>
-        <script src="../assets/js/jquery-2.2.2.min.js"></script>
+        <script src="../assets/reveal.js/dist/reveal.js"></script>
+        <script src="../assets/reveal.js/plugin/notes/notes.js"></script>
+        <script src="../assets/reveal.js/plugin/markdown/markdown.js"></script>
+        <script src="../assets/reveal.js/plugin/highlight/highlight.js"></script>
 
-        <style type="text/css">
-            #footer-left {
-            position: absolute;
-            bottom: 1%;
-            left: 1%;
-            font-size: 0.6em;
-            opacity: 0.6;
-            }
-        </style>
         <script>
             // More info about config & dependencies:
             // - https://github.com/hakimel/reveal.js#configuration
             // - https://github.com/hakimel/reveal.js#dependencies
             Reveal.initialize({
-                dependencies: [
-                    { src: '../assets/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-                ],
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
                 width: "100%",
                 height: "100%",
                 margin: 0.1,
                 minScale: 1,
                 maxScale: 1,
+                hash: true,
                 slideNumber: true
             });
 
-            Reveal.configure({ pdfMaxPagesPerSlide: 1 });
+            Reveal.configure({
+                pdfMaxPagesPerSlide: 1,
+                pdfSeparateFragments: false
+            });
 
-            variables.footer = $('#footer').html();
+            var footer = document.getElementById( 'footer' ).children[0];
+            console.log( footer );
             if ( window.location.search.match( /print-pdf/gi ) ) {
-                Reveal.addEventListener( 'ready', function( event ) {
-                    $('.slide-background').append(footer);
+                Reveal.on( 'ready', function( event ) {
+                    document.querySelectorAll( '.slide-background').forEach( function( el ) {
+                        el.append( footer.cloneNode( true ) );
+                    });
                 });
             }
             else {
-                $('div.reveal').append(footer);
+                document.querySelector( 'div.reveal').append( footer )
             }
         </script>
     </body>
