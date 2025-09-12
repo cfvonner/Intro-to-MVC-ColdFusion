@@ -1,8 +1,8 @@
 /settings.xml
 /.project
 /.settings
-/MVCApp/framework
-/MVCApp-ColdBox/coldbox
-/MVCApp-ColdBox/modules
+/MVCAppFW1/framework
+/MVCAppColdBox/coldbox
+/MVCAppColdBox/modules
 /DB/Derby
 /DB/H2
