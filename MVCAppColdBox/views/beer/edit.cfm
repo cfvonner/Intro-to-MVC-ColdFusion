@@ -23,17 +23,16 @@
         <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">
-        <form class="form-horizontal" action="#event.buildLink( 'beer.save' )#" 
-              name="beerForm" method="post">
+        <form class="form-horizontal" action="#event.buildLink( 'beer.save' )#" name="beerForm" method="post">
             <input id="beerId" name="beerId" type="hidden" value="#rc.beerId#">
             <div class="form-group">
                 <label for="beerName" class="col-sm-2 control-label">
                     Name
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="beerName" 
-                           name="beerName" placeholder="Beer Name" 
-                           value="#rc.beerName#" required="required">
+                    <input type="text" class="form-control" id="beerName"
+                        name="beerName" placeholder="Beer Name"
+                        value="#rc.beerName#" required="required">
                     <span id="helpBlock" class="help-block">
                         <p class="text-danger">Required</p>
                     </span>
@@ -44,13 +43,13 @@
                     Brewery
                 </label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="breweryId" name="breweryId" 
+                    <select class="form-control" id="breweryId" name="breweryId"
                             required="required">
-                        <option value="0" 
+                        <option value="0"
                             <cfif rc.breweryId EQ 0>selected="selected"</cfif>>
                             -Select a Brewery-</option>
                         <cfloop query="rc.breweries">
-                            <option value="#rc.breweries.id#" 
+                            <option value="#rc.breweries.id#"
                                 <cfif rc.breweryId EQ rc.breweries.id>selected="selected"</cfif>>
                                 #rc.breweries.name#</option>
                         </cfloop>
@@ -63,11 +62,11 @@
                 </label>
                 <div class="col-sm-10">
                     <select class="form-control" id="beerType" name="beerType">
-                        <option value="" 
+                        <option value=""
                             <cfif rc.beerType IS "">selected="selected"</cfif>>
                             -Select a Style-</option>
                         <cfloop query="rc.beerTypes">
-                            <option value="#rc.beerTypes.type#" 
+                            <option value="#rc.beerTypes.type#"
                                 <cfif rc.beerType IS rc.beerTypes.type>selected="selected"</cfif>>
                                 #rc.beerTypes.type#</option>
                         </cfloop>
@@ -80,7 +79,7 @@
                 </label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="beerABV" name="beerABV"
-                           placeholder="Alcohol Content" value="#rc.beerABV#">
+                        placeholder="Alcohol Content" value="#rc.beerABV#">
                 </div>
             </div>
             <div class="form-group">
@@ -89,7 +88,7 @@
                 </label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="beerIBU" name="beerIBU"
-                           placeholder="Bitterness Units" value="#rc.beerIBU#">
+                        placeholder="Bitterness Units" value="#rc.beerIBU#">
                 </div>
             </div>
             <div class="form-group">

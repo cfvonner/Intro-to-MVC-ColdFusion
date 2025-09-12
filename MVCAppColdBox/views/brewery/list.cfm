@@ -18,7 +18,7 @@
         <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container space-bottom">
-        <a class="btn btn-default btn-sm" href="#event.buildLink( linkTo='brewery.add' )#" role="button">
+        <a class="btn btn-default btn-sm" href="#event.buildLink( 'brewery.add' )#" role="button">
             <i class="fa fa-plus-square text-success" aria-hidden="true">
             </i>
             <span class="text-success">
@@ -27,9 +27,7 @@
         </a>
     </div>
     <div class="container">
-        <table id="breweries" 
-               class="table table-bordered 
-            table-striped table-hover table-condensed table-dt">
+        <table id="breweries" class="table table-bordered table-striped table-hover table-condensed table-dt">
             <thead>
                 <th>
                     Name
@@ -62,15 +60,13 @@
                             #rc.breweries.country#
                         </td>
                         <td class="text-center text-nowrap">
-                            <a href="#event.buildLink( linkTo='brewery.edit', queryString='breweryId=#rc.breweries.id#' )#" 
-                               title="Edit" role="button">
-                                <i class="fa fa-pencil-square-o text-success" 
-                                   aria-hidden="true">
+                            <cfset queryString = { 'breweryId' : rc.breweries.id }>
+                            <a href="#event.buildLink( 'brewery.edit', queryString )#" title="Edit" role="button">
+                                <i class="fa fa-pencil-square-o text-success" aria-hidden="true">
                                 </i>
                             </a>
                             &nbsp;
-                            <a href="#event.buildLink( linkTo='brewery.delete', queryString='breweryId=#rc.breweries.id#' )#" 
-                               title="Delete" role="button">
+                            <a href="#event.buildLink( 'brewery.delete', queryString )#" title="Delete" role="button">
                                 <i class="fa fa-trash text-danger" aria-hidden="true">
                                 </i>
                             </a>

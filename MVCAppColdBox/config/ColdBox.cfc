@@ -1,12 +1,12 @@
 component {
-    
+
     function configure() {
         coldbox = {
             requestStartHandler	= "main.onRequestStart",
-                        
+
             // Dev settings only!
             reinitPassword		= '',
-            customErrorTemplate = '/coldbox/system/includes/BugReport.cfm'
+            customErrorTemplate = '/coldbox/system/exceptions/BugReport.cfm'
         };
 
         /*interceptors = [
@@ -17,11 +17,11 @@ component {
             h1Title = 'ColdBox MVC App',
             title = 'ColdBox MVC Demo'
         };
-    
+
         debugger = {
             debugMode = false
         };
-        
+
     }
-    
+
 }

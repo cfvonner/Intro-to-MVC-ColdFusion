@@ -2,16 +2,16 @@ component displayname="Beer controller" {
 
     property name='beerService'		inject='beer'; // Dependency Injection in action!
     property name='breweryService'	inject='brewery';
-    
+
     public void function index () {
         setNextEvent( 'beer.list' );
     }
-    
+
     public void function list ( event, rc, prc ) {
         rc.beers = beerService.getAllBeers();
         rc.subtitle = "Beer List";
     }
-    
+
     public void function add ( event, rc, prc ) {
         rc.beerId = 0;
         rc.breweryID = 0;
@@ -24,7 +24,7 @@ component displayname="Beer controller" {
         rc.subtitle = 'Add Beer';
         event.setView( 'beer/edit' );
     }
-    
+
     public void function edit ( event, rc, prc ) {
         if ( StructKeyExists( rc, 'beerId' ) && rc.beerId > 0 ) {
             var beer = beerService.getBeer( rc.beerId );
@@ -38,18 +38,18 @@ component displayname="Beer controller" {
         rc.breweries = breweryService.getAllBreweries();
         rc.subtitle = 'Edit Beer';
     }
-    
+
     public void function save ( event, rc, prc ) {
         rc.beerId = beerService.save( rc.beerId, rc.beerName, rc.breweryId,
             rc.beerType, rc.beerABV, rc.beerIBU );
         rc.subtitle = 'Edit Beer';
-        setNextEvent( event='beer.edit', persist='beerID' );
+        relocate( event='beer.edit', persist='beerID' );
     }
-    
+
     public void function delete ( event, rc, prc ) {
         if ( event.valueExists( 'beerId' ) && rc.beerId > 0 ) {
             beerService.delete( rc.beerId );
         }
-        setNextEvent( 'beer.list' );
+        relocate( 'beer.list' );
     }
 }

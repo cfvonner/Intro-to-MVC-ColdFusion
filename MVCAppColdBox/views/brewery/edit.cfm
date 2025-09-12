@@ -23,17 +23,15 @@
         <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">
-        <form class="form-horizontal" action="#event.buildLink( 'brewery.save' )#" 
-              name="breweryForm" method="post">
-            <input id="breweryId" name="breweryId" type="hidden" 
-                   value="#rc.breweryId#">
+        <form class="form-horizontal" action="#event.buildLink( 'brewery.save' )#" name="breweryForm" method="post">
+            <input id="breweryId" name="breweryId" type="hidden" value="#rc.breweryId#">
             <div class="form-group">
                 <label for="breweryName" class="col-sm-2 control-label">
                     Name
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryName" 
-                        name="breweryName" placeholder="Brewery Name" 
+                    <input type="text" class="form-control" id="breweryName"
+                        name="breweryName" placeholder="Brewery Name"
                         value="#rc.breweryName#" required="required">
                     <span id="helpBlock" class="help-block">
                         <p class="text-danger">Required</p>
@@ -45,8 +43,8 @@
                     City
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryCity" 
-                        name="breweryCity" placeholder="City" 
+                    <input type="text" class="form-control" id="breweryCity"
+                        name="breweryCity" placeholder="City"
                         value="#rc.breweryCity#">
                 </div>
             </div>
@@ -55,8 +53,8 @@
                     State
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryState" 
-                        name="breweryState" placeholder="State" 
+                    <input type="text" class="form-control" id="breweryState"
+                        name="breweryState" placeholder="State"
                         value="#rc.breweryState#">
                 </div>
             </div>
@@ -65,8 +63,8 @@
                     Country
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryCountry" 
-                        name="breweryCountry" placeholder="Country" 
+                    <input type="text" class="form-control" id="breweryCountry"
+                        name="breweryCountry" placeholder="Country"
                         value="#rc.breweryCountry#">
                 </div>
             </div>

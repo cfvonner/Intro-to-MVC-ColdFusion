@@ -1,7 +1,7 @@
 {
     "name":"Intro-to-MVC",
     "app":{
-        "cfengine":"adobe@2016"
+        "cfengine":"adobe@2023"
     },
     "web":{
         "rewrites":{
@@ -13,6 +13,10 @@
         }
     },
     "JVM":{
-        "heapSize":"2048"
+        "heapSize":"2048",
+        "javaVersion":"openjdk17"
+    },
+    "scripts":{
+        "onServerInitialInstall":"cfpm install derby,caching,debugger,administrator"
     }
 }

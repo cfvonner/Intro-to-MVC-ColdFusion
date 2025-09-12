@@ -27,9 +27,7 @@
         </a>
     </div>
     <div class="container">
-        <table id="beers" 
-               class="table table-bordered 
-            table-striped table-hover table-condensed table-dt">
+        <table id="beers" class="table table-bordered table-striped table-hover table-condensed table-dt">
             <thead>
                 <th>
                     Name
@@ -41,19 +39,17 @@
                     Type
                 </th>
                 <th>
-                    <a href="##" data-toggle="tooltip" 
-                        title="Alcohol By Volume">ABV</a>
+                    <a href="##" data-toggle="tooltip" title="Alcohol By Volume">ABV</a>
                 </th>
                 <th>
-                    <a href="##" data-toggle="tooltip" 
-                        title="International Bitterness Units">IBU</a>
+                    <a href="##" data-toggle="tooltip" title="International Bitterness Units">IBU</a>
                 </th>
                 <th data-orderable="false">
                 </th>
             </thead>
             <tbody>
                 <cfloop query="rc.beers">
-                     <tr>
+                    <tr>
                         <td class="text-left">
                             #rc.beers.name#
                         </td>
@@ -70,15 +66,13 @@
                             #rc.beers.ibu#
                         </td>
                         <td class="text-center text-nowrap">
-                            <a href="#event.buildLink( linkto='beer.edit', queryString='beerId=#rc.beers.id#' )#" 
-                               title="Edit" role="button">
-                                <i class="fa fa-pencil-square-o text-success" 
-                                   aria-hidden="true">
+                            <cfset queryString = { 'beerId' : rc.beers.id }>
+                            <a href="#event.buildLink( 'beer.edit', queryString )#" title="Edit" role="button">
+                                <i class="fa fa-pencil-square-o text-success" aria-hidden="true">
                                 </i>
                             </a>
                             &nbsp;
-                            <a href="#event.buildLink( linkto='beer.delete', queryString='beerId=#rc.beers.id#' )#" 
-                               title="Delete" role="button">
+                            <a href="#event.buildLink( 'beer.delete', queryString )#" title="Delete" role="button">
                                 <i class="fa fa-trash text-danger" aria-hidden="true">
                                 </i>
                             </a>
