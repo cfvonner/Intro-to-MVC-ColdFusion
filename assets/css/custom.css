@@ -9,6 +9,14 @@ body {
   margin-bottom: 60px;
 }
 
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+.button-group {
+  margin-top: 1.5rem;
+}
+
 .footer {
   /* revisit this after development is done and we turn off debug output */
   position: absolute;
@@ -21,33 +29,7 @@ body {
 }
 
 .bold {
-  font-weight: bold; 
-}
-
-/*
- * Appropriated from the Boostrap docs.css file
-*/
-.show-grid [class^="col-"] {
-  /*padding-top: 10px;
-  padding-bottom: 10px;*/
-  border: 1px solid #ddd;
-  border: 1px solid rgba(150,150,150,.5);
-}
-
-.show-grid .bold {
-  background-color: #eee;
-  background-color: rgba(200,200,200,.5);
-}
-
-/* 
- * Appropriated from http://getbootstrap.com.vn/examples/equal-height-columns/equal-height-columns.css
- * experimental example site
-*/ 
-.row-eq-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display:         flex;
+  font-weight: bold;
 }
 
 .space-bottom {
