@@ -1,25 +1,27 @@
 <cfoutput>
     <div id="home" class="page-header">
-        <ol class="breadcrumb">
-            <li>
-                <a href="/">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#event.buildLink( 'main.index' )#">
-                    MVC Demo - ColdBox
-                </a>
-            </li>
-            <li>
-                <a href="#event.buildLink( 'brewery.list' )#">
-                    Brewery List
-                </a>
-            </li>
-            <li class="active">
-                #rc.subtitle#
-            </li>
-        </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#event.buildLink( 'main.index' )#">
+                        #getSetting( 'h1Title' )#
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#event.buildLink( 'brewery.list' )#">
+                        Brewery List
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    #rc.subtitle#
+                </li>
+            </ol>
+        </nav>
         <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">
@@ -30,9 +32,7 @@
                     Name
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryName"
-                        name="breweryName" placeholder="Brewery Name"
-                        value="#rc.breweryName#" required="required">
+                    <input type="text" class="form-control" id="breweryName" name="breweryName" placeholder="Brewery Name" value="#rc.breweryName#" required="required">
                     <span id="helpBlock" class="help-block">
                         <p class="text-danger">Required</p>
                     </span>
@@ -43,9 +43,7 @@
                     City
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryCity"
-                        name="breweryCity" placeholder="City"
-                        value="#rc.breweryCity#">
+                    <input type="text" class="form-control" id="breweryCity" name="breweryCity" placeholder="City" value="#rc.breweryCity#">
                 </div>
             </div>
             <div class="form-group">
@@ -53,9 +51,7 @@
                     State
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryState"
-                        name="breweryState" placeholder="State"
-                        value="#rc.breweryState#">
+                    <input type="text" class="form-control" id="breweryState" name="breweryState" placeholder="State" value="#rc.breweryState#">
                 </div>
             </div>
             <div class="form-group">
@@ -63,17 +59,15 @@
                     Country
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="breweryCountry"
-                        name="breweryCountry" placeholder="Country"
-                        value="#rc.breweryCountry#">
+                    <input type="text" class="form-control" id="breweryCountry" name="breweryCountry" placeholder="Country" value="#rc.breweryCountry#">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group button-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary" name="Submit">
                         Save
                     </button>
-                    <button type="reset" class="btn btn-default" name="Reset">
+                    <button type="reset" class="btn btn-light" name="Reset">
                         Reset
                     </button>
                     <a href="#event.buildLink( 'brewery.list' )#" class="btn btn-warning" role="button">

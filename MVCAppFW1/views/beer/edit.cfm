@@ -1,39 +1,38 @@
 <cfoutput>
     <div id="home" class="page-header">
-        <ol class="breadcrumb">
-            <li>
-                <a href="/">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#BuildURL( action='main.default' )#">
-                    MVC Demo - FW/1
-                </a>
-            </li>
-            <li>
-                <a href="#BuildURL( action='beer.list' )#">
-                    Beer List
-                </a>
-            </li>
-            <li class="active">
-                #rc.subtitle#
-            </li>
-        </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#BuildURL( action='main.default' )#">
+                        #rc.appSettings.h1Title#
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#BuildURL( action='beer.list' )#">
+                        Beer List
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    #rc.subtitle#
+                </li>
+            </ol>
+        </nav>
         <h1>#rc.appSettings.h1Title#</h1>
     </div>
     <div class="container">
-        <form class="form-horizontal" action="#BuildURL( action='beer.save' )#" 
-              name="beerForm" method="post">
+        <form class="form-horizontal" action="#BuildURL( action='beer.save' )#" name="beerForm" method="post">
             <input id="beerId" name="beerId" type="hidden" value="#rc.beerId#">
             <div class="form-group">
                 <label for="beerName" class="col-sm-2 control-label">
                     Name
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="beerName" 
-                           name="beerName" placeholder="Beer Name" 
-                           value="#rc.beerName#" required="required">
+                    <input type="text" class="form-control" id="beerName" name="beerName" placeholder="Beer Name" value="#rc.beerName#" required="required">
                     <span id="helpBlock" class="help-block">
                         <p class="text-danger">Required</p>
                     </span>
@@ -44,13 +43,13 @@
                     Brewery
                 </label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="breweryId" name="breweryId" 
+                    <select class="form-control" id="breweryId" name="breweryId"
                             required="required">
-                        <option value="0" 
+                        <option value="0"
                             <cfif rc.breweryId EQ 0>selected="selected"</cfif>>
                             -Select a Brewery-</option>
                         <cfloop query="rc.breweries">
-                            <option value="#rc.breweries.id#" 
+                            <option value="#rc.breweries.id#"
                                 <cfif rc.breweryId EQ rc.breweries.id>selected="selected"</cfif>>
                                 #rc.breweries.name#</option>
                         </cfloop>
@@ -63,11 +62,11 @@
                 </label>
                 <div class="col-sm-10">
                     <select class="form-control" id="beerType" name="beerType">
-                        <option value="" 
+                        <option value=""
                             <cfif rc.beerType IS "">selected="selected"</cfif>>
                             -Select a Style-</option>
                         <cfloop query="rc.beerTypes">
-                            <option value="#rc.beerTypes.type#" 
+                            <option value="#rc.beerTypes.type#"
                                 <cfif rc.beerType IS rc.beerTypes.type>selected="selected"</cfif>>
                                 #rc.beerTypes.type#</option>
                         </cfloop>
@@ -79,8 +78,7 @@
                     ABV
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="beerABV" name="beerABV"
-                           placeholder="Alcohol Content" value="#rc.beerABV#">
+                    <input type="text" class="form-control" id="beerABV" name="beerABV" placeholder="Alcohol Content" value="#rc.beerABV#">
                 </div>
             </div>
             <div class="form-group">
@@ -88,16 +86,15 @@
                     IBU
                 </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="beerIBU" name="beerIBU"
-                           placeholder="Bitterness Units" value="#rc.beerIBU#">
+                    <input type="text" class="form-control" id="beerIBU" name="beerIBU" placeholder="Bitterness Units" value="#rc.beerIBU#">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group button-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary" name="Submit">
                         Save
                     </button>
-                    <button type="reset" class="btn btn-default" name="Reset">
+                    <button type="reset" class="btn btn-light" name="Reset">
                         Reset
                     </button>
                     <a href="#BuildURL( action='beer.list' )#" class="btn btn-warning" role="button">

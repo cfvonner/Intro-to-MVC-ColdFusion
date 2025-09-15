@@ -10,16 +10,20 @@
         <cfoutput>
             <div class="container" role="main">
                 <div id="home" class="page-header">
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/">Home</a>
-                        </li>
-                        <li class="active">
-                            #request.h1Title#
-                        </li>
-                    </ol>
-                    <h1>#request.h1Title#</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                #request.h1Title#
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
+                <h1>#request.h1Title#</h1>
                 <div class="container">
                     <ul>
                         <li>

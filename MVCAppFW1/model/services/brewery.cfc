@@ -4,9 +4,9 @@ component displayname="Brewery service" accessors="true" {
     public any function init ( helperService ) {
         variables.hs = helperService;
     }
-    
+
     public query function getAllBreweries () {
-        return queryExecute( 
+        return queryExecute(
            "SELECT  id
                     ,name
                     ,city
@@ -16,9 +16,9 @@ component displayname="Brewery service" accessors="true" {
             ORDER BY name"
         ); // queryExecute equivalent to <cfquery>
     }
-    
+
     public query function getBrewery ( required numeric id ) {
-        return queryExecute( 
+        return queryExecute(
            "SELECT  id
                     ,name
                     ,city
@@ -29,7 +29,7 @@ component displayname="Brewery service" accessors="true" {
             { id = { value = arguments.id, cfsqltype = 'integer' } } // equivalent to <cfqueryparam>
         );
     }
-    
+
     public numeric function save ( numeric id = 0, string name = '', string city='',
           string state = '', string country = '' ) {
         var breweryExists = getBrewery( id ).recordcount;
@@ -43,13 +43,13 @@ component displayname="Brewery service" accessors="true" {
                 WHERE id = :id",
                 {
                     id = { value = arguments.id, cfsqltype = 'integer'},
-                    name = { value = arguments.name, 
+                    name = { value = arguments.name,
                         null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
-                    city = { value = arguments.city, 
+                    city = { value = arguments.city,
                         null = hs.isEmptyString( arguments.city ), cfsqltype = 'varchar' },
-                    state = { value = arguments.state, 
+                    state = { value = arguments.state,
                         null = hs.isEmptyString( arguments.state ), cfsqltype = 'varchar' },
-                    country = { value = arguments.country, 
+                    country = { value = arguments.country,
                         null = hs.isEmptyString( arguments.country ), cfsqltype = 'varchar' }
                 }
             );
@@ -62,13 +62,13 @@ component displayname="Brewery service" accessors="true" {
                 ( name, city, state, country )
                 VALUES ( :name, :city, :state, :country )",
                 {
-                    name = { value = arguments.name, 
+                    name = { value = arguments.name,
                         null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
-                    city = { value = arguments.city, 
+                    city = { value = arguments.city,
                         null = hs.isEmptyString( arguments.city ), cfsqltype = 'varchar' },
-                    state = { value = arguments.state, 
+                    state = { value = arguments.state,
                         null = hs.isEmptyString( arguments.state ), cfsqltype = 'varchar' },
-                    country = { value = arguments.country, 
+                    country = { value = arguments.country,
                         null = hs.isEmptyString( arguments.country ), cfsqltype = 'varchar' }
                 },
                 { result = 'result'}
@@ -76,9 +76,9 @@ component displayname="Brewery service" accessors="true" {
             return result.generatedkey;
         }
     }
-    
+
     public void function delete ( required numeric id ) {
-        queryExecute( 
+        queryExecute(
             "DELETE FROM Brewery WHERE id = :id",
             { id={ value=arguments.id, cfsqltype='integer' } }
         );

@@ -8,12 +8,12 @@ component output='false' {
     this.sessionTimeout = CreateTimeSpan( 0, 2, 0, 0 );
     this.datasources = {
         BeerTracker = {
-            url = "jdbc:derby:#variables.dbPath#;MaxPooledStatements=300", 
+            url = "jdbc:derby:#variables.dbPath#;MaxPooledStatements=300",
             driver = "Apache Derby Embedded"
         }
     };
     this.datasource = "BeerTracker";
-    
+
 
     public boolean function OnApplicationStart() {
         return true;
@@ -32,14 +32,14 @@ component output='false' {
     }
 
     public void function OnRequest( required string targetpage ) {
-        request.h1Title = 'Procedural App';
+        request.h1Title = 'Beer Tracker (Procedural)';
         request.title = 'Procedural Demo';
 
         // merge the form and url scopes together into request scope for convenience
         if ( IsDefined( 'URL') ) request.append( url );
         if ( Isdefined( 'form' ) ) request.append( form );
 
-        // include the requested page 
+        // include the requested page
         cfinclude( template=arguments.targetpage );
     }
 }

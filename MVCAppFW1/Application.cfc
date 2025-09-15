@@ -13,7 +13,7 @@ component {
         }
     };
     this.datasource = "BeerTracker";
-    this.mappings['/framework'] = expandpath( '/MVCApp-FW1/fw1/framework' );
+    this.mappings['/framework'] = expandpath( '/MVCAppFW1/framework' );
 
     // FW/1 Configuration
     function _get_framework_one() {
@@ -21,8 +21,9 @@ component {
             request._framework_one = new MyApplication({
                 trace : true
                 ,reloadApplicationOnEveryRequest : true
+                ,baseURL : "useRequestURI" // comment this out for SES URLs
                 //,generateSES : true
-                //,SESOmitIndex : true 
+                //,SESOmitIndex : true
             });
         }
         return request._framework_one;

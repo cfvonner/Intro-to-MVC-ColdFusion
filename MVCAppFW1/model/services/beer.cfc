@@ -5,7 +5,7 @@ component displayname="Beer service" accessors="true" {
         variables.hs = helperService;
     }
     public query function getAllBeers () {
-        return queryExecute( 
+        return queryExecute(
            "SELECT  be.id
                     ,be.breweryId
                     ,be.name
@@ -18,9 +18,9 @@ component displayname="Beer service" accessors="true" {
             ORDER BY be.name ASC"
         ); // queryExecute equivalent to <cfquery>
     }
-    
+
     public query function getBeer ( required numeric id ) {
-        return queryExecute( 
+        return queryExecute(
            "SELECT  id
                     ,breweryId
                     ,name
@@ -29,11 +29,11 @@ component displayname="Beer service" accessors="true" {
                     ,ibu
             FROM Beer
             WHERE id = :id",
-            { id = { value = arguments.id, cfsqltype = 'integer' } } 
+            { id = { value = arguments.id, cfsqltype = 'integer' } }
             // equivalent to <cfqueryparam>
         );
     }
-    
+
     public query function getBeerTypes () {
         return queryExecute(
            "SELECT DISTINCT type
@@ -41,26 +41,26 @@ component displayname="Beer service" accessors="true" {
             ORDER BY type ASC"
         );
     }
-    
-    public numeric function save ( numeric id = 0, string name = '', numeric breweryId, 
+
+    public numeric function save ( numeric id = 0, string name = '', numeric breweryId,
           string type = '', numeric abv = 0, numeric ibu = 0 ) {
         var beerExists = getBeer( id ).recordcount;
         if ( arguments.id > 0 && beerExists ) {
             queryExecute(
                "UPDATE Beer
                 SET name = :name
-                    ,breweryId = :breweryId 
-                    ,type = :type 
-                    ,abv = :abv 
+                    ,breweryId = :breweryId
+                    ,type = :type
+                    ,abv = :abv
                     ,ibu = :ibu
                 WHERE id = :id",
                 {
                     id = { value = arguments.id, cfsqltype = 'integer'},
-                    name = { value = arguments.name, 
+                    name = { value = arguments.name,
                         null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
-                    breweryId = { value = arguments.breweryId, 
+                    breweryId = { value = arguments.breweryId,
                         null = hs.isEmptyString( arguments.breweryId ), cfsqltype = 'integer' },
-                    type = { value = arguments.type, 
+                    type = { value = arguments.type,
                         null = hs.isEmptyString( arguments.type ), cfsqltype = 'varchar' },
                     abv = { value = arguments.abv, cfsqltype = 'decimal' },
                     ibu = { value = arguments.ibu, cfsqltype = 'decimal' }
@@ -75,11 +75,11 @@ component displayname="Beer service" accessors="true" {
                 ( name, breweryId, type, abv, ibu )
                 VALUES ( :name, :breweryId, :type, :abv, :ibu )",
                 {
-                    name = { value = arguments.name, 
+                    name = { value = arguments.name,
                         null = hs.isEmptyString( arguments.name ), cfsqltype = 'varchar' },
-                    breweryId = { value = arguments.breweryId, 
+                    breweryId = { value = arguments.breweryId,
                         null = hs.isEmptyString( arguments.breweryId ), cfsqltype = 'integer' },
-                    type = { value = arguments.type, 
+                    type = { value = arguments.type,
                         null = hs.isEmptyString( arguments.type ), cfsqltype = 'varchar' },
                     abv = { value = arguments.abv, cfsqltype = 'decimal' },
                     ibu = { value = arguments.ibu, cfsqltype = 'decimal' }
@@ -89,9 +89,9 @@ component displayname="Beer service" accessors="true" {
             return result.generatedkey;
         }
     }
-    
+
     public void function delete ( required numeric id ) {
-        queryExecute( 
+        queryExecute(
             "DELETE FROM Beer WHERE id = :id",
             { id={ value=arguments.id, cfsqltype='integer' } }
         );

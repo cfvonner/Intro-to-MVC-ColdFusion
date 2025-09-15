@@ -22,36 +22,33 @@
         <cfoutput>
             <div class="container" role="main">
                 <div id="home" class="page-header">
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.cfm">#request.h1Title#</a>
-                        </li>
-                        <li class="active">
-                            Brewery List
-                        </li>
-                    </ol>
-                    <h1>
-                        #request.h1Title#
-                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="index.cfm">#request.h1Title#</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Brewery List
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1>#request.h1Title#</h1>
                 </div>
                 <div class="container space-bottom">
-                    <a class="btn btn-default btn-sm" href="brewery-edit.cfm" role="button">
-                        <i class="fa fa-plus-square text-success" aria-hidden="true">
-                        </i>
+                    <a class="btn btn-light btn-sm" href="brewery-edit.cfm" role="button">
+                        <i class="fa-solid fa-square-plus text-success" aria-hidden="true"></i>
                         <span class="text-success">
                             Add Brewery
                         </span>
                     </a>
                 </div>
                 <div class="container">
-                    <table id="breweries" 
-                           class="table table-bordered 
-                        table-striped table-hover table-condensed table-dt">
+                    <table id="breweries" class="table table-bordered table-striped table-hover table-condensed table-dt">
                         <thead>
                             <th>
                                 Name
@@ -84,17 +81,12 @@
                                         #getAllBreweries.country#
                                     </td>
                                     <td class="text-center text-nowrap">
-                                        <a href="brewery-edit.cfm?edit&breweryId=#getAllBreweries.id#" 
-                                           title="Edit" role="button">
-                                            <i class="fa fa-pencil-square-o text-success" 
-                                               aria-hidden="true">
-                                            </i>
+                                        <a class="btn btn-light btn-sm" href="brewery-edit.cfm?edit&breweryId=#getAllBreweries.id#" title="Edit" role="button">
+                                            <i class="fa-regular fa-pen-to-square text-success" aria-hidden="true"></i>
                                         </a>
                                         &nbsp;
-                                        <a href="brewery-edit.cfm?delete&breweryId=#getAllBreweries.id#" 
-                                           title="Delete" role="button">
-                                            <i class="fa fa-trash text-danger" aria-hidden="true">
-                                            </i>
+                                        <a class="btn btn-light btn-sm" href="brewery-edit.cfm?delete&breweryId=#getAllBreweries.id#" title="Delete" role="button">
+                                            <i class="fa-regular fa-trash-can text-danger" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                 </tr>

@@ -4,6 +4,6 @@ component accessors="true" {
         variables.fw = fw;
         return this;
     }
-    
-    public void function default ( rc ) {}
+
+    public void function default ( rc, prc ) {}
 }

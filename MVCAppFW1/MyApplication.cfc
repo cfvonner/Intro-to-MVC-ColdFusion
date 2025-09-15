@@ -19,7 +19,7 @@ component extends="framework.one" {
 
     function before( struct rc ) {
         rc.appSettings = {
-            h1Title : 'FW/1 MVC App',
+            h1Title : 'Beer Tracker (FW/1 MVC)',
             title : 'FW/1 MVC Demo'
         };
     }

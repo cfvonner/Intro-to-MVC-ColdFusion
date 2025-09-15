@@ -6,7 +6,7 @@ component {
     this.applicationTimeout = CreateTimeSpan( 1, 0, 0, 0 );
     this.sessionManagement = true;
     this.sessionTimeout = CreateTimeSpan( 0, 2, 0, 0 );
-    
+
     // COLDBOX STATIC PROPERTY, DO NOT CHANGE UNLESS THIS IS NOT THE ROOT OF YOUR COLDBOX APP
     COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
     // The web server mapping to this application. Used for remote purposes or static purposes
@@ -15,10 +15,10 @@ component {
     COLDBOX_CONFIG_FILE     = "";
     // COLDBOX APPLICATION KEY OVERRIDE
     COLDBOX_APP_KEY         = "";
-    
+
     this.datasources = {
         BeerTracker = {
-            url = "jdbc:derby:#variables.dbPath#;MaxPooledStatements=300", 
+            url = "jdbc:derby:#variables.dbPath#;MaxPooledStatements=300",
             driver = "Apache Derby Embedded"
         }
     };

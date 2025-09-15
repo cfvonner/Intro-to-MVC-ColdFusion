@@ -1,15 +1,17 @@
 <cfoutput>
     <div id="home" class="page-header">
-        <ol class="breadcrumb">
-            <li>
-                <a href="/">
-                    Home
-                </a>
-            </li>
-            <li class="active">
-                MVC Demo - ColdBox
-            </li>
-        </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    #getSetting( 'h1Title' )#
+                </li>
+            </ol>
+        </nav>
         <h1>#getSetting( 'h1Title' )#</h1>
     </div>
     <div class="container">

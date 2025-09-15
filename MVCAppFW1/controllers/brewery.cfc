@@ -6,17 +6,17 @@ component displayname="Brewery controller"  accessors="true" {
         variables.fw = fw;
         return this;
     }
-    
-    public void function default ( rc ) {
+
+    public void function default ( rc, prc ) {
         variables.fw.redirect( action='brewery.list', append='none');
     }
-    
-    public void function list ( rc ) {
+
+    public void function list ( rc, prc ) {
         rc.breweries = breweryService.getAllBreweries();
         rc.subtitle = "Brewery List";
     }
-    
-    public void function add ( rc ) {
+
+    public void function add ( rc, prc ) {
         rc.breweryId = 0;
         rc.breweryName = '';
         rc.breweryCity = '';
@@ -25,8 +25,8 @@ component displayname="Brewery controller"  accessors="true" {
         rc.subtitle = 'Add brewery';
         variables.fw.setView( 'brewery.edit' );
     }
-    
-    public void function edit ( rc ) {
+
+    public void function edit ( rc, prc ) {
         if ( StructKeyExists( rc, 'breweryId' ) && rc.breweryId > 0 ) {
             var brewery = breweryService.getBrewery( rc.breweryId );
             rc.breweryName = brewery.name;
@@ -36,15 +36,15 @@ component displayname="Brewery controller"  accessors="true" {
         }
         rc.subtitle = 'Edit Brewery';
     }
-    
-    public void function save ( rc ) {
+
+    public void function save ( rc, prc ) {
         rc.breweryId = breweryservice.save( rc.breweryId, rc.breweryName,
             rc.breweryCity, rc.breweryState, rc.breweryCountry);
         rc.subtitle = 'Edit brewery';
         variables.fw.redirect( action='brewery.edit', append='breweryId');
     }
-    
-    public void function delete ( rc ) {
+
+    public void function delete ( rc, prc ) {
         if ( StructKeyExists( rc, 'breweryId' ) && rc.breweryId > 0 ) {
             breweryService.delete( rc.breweryId );
         }

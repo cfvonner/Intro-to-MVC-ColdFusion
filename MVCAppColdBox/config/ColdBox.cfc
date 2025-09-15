@@ -14,7 +14,7 @@ component {
         ];*/
 
         settings = {
-            h1Title = 'ColdBox MVC App',
+            h1Title = 'Beer Tracker (ColdBox MVC)',
             title = 'ColdBox MVC Demo'
         };
 

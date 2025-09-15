@@ -24,14 +24,10 @@
             <cfquery>
                 UPDATE Beer
                 SET breweryId = <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
-                    ,name = <cfqueryparam value="#request.beerName#" 
-                          null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
-                    ,type = <cfqueryparam value="#request.beerType#" 
-                          null="#!Len( Trim( request.beerType ) )#" cfsqltype="cf_sql_varchar">
-                    ,abv = <cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" 
-                          cfsqltype="cf_sql_decimal">
-                    ,ibu = <cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" 
-                          cfsqltype="cf_sql_decimal">
+                    ,name = <cfqueryparam value="#request.beerName#" null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
+                    ,type = <cfqueryparam value="#request.beerType#" null="#!Len( Trim( request.beerType ) )#" cfsqltype="cf_sql_varchar">
+                    ,abv = <cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" cfsqltype="cf_sql_decimal">
+                    ,ibu = <cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" cfsqltype="cf_sql_decimal">
                 WHERE id = <cfqueryparam value="#request.beerId#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfset subtitle = "Edit Beer">
@@ -54,14 +50,10 @@
             INSERT INTO Beer
             ( breweryId, name, type, abv, ibu )
             VALUES ( <cfqueryparam value="#request.breweryId#" cfsqltype="cf_sql_integer">
-                    ,<cfqueryparam value="#request.beerName#" null="#!Len( Trim( request.beerName ) )#" 
-                      cfsqltype="cf_sql_varchar">
-                    ,<cfqueryparam value="#request.beerType#" null="#!Len( Trim( request.beerType ) )#" 
-                      cfsqltype="cf_sql_varchar">
-                    ,<cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" 
-                      cfsqltype="cf_sql_decimal">
-                    ,<cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" 
-                      cfsqltype="cf_sql_decimal">
+                    ,<cfqueryparam value="#request.beerName#" null="#!Len( Trim( request.beerName ) )#" cfsqltype="cf_sql_varchar">
+                    ,<cfqueryparam value="#request.beerType#" null="#!Len( Trim( request.beerType ) )#" cfsqltype="cf_sql_varchar">
+                    ,<cfqueryparam value="#request.beerABV#" null="#!Len( Trim( request.beerABV ) )#" cfsqltype="cf_sql_decimal">
+                    ,<cfqueryparam value="#request.beerIBU#" null="#!Len( Trim( request.beerIBU ) )#" cfsqltype="cf_sql_decimal">
             )
         </cfquery>
         <cfset subtitle = "Edit Beer">
@@ -93,42 +85,33 @@
         <cfoutput>
             <div class="container" role="main">
                 <div id="home" class="page-header">
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.cfm">
-                                #request.h1Title#
-                            </a>
-                        </li>
-                        <li>
-                            <a href="beer-list.cfm">
-                                Beer List
-                            </a>
-                        </li>
-                        <li class="active">
-                            #subtitle#
-                        </li>
-                    </ol>
-                    <h1>
-                        #request.h1Title#
-                    </h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="index.cfm">#request.h1Title#</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="beer-list.cfm">Beer List</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                #subtitle#
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1>#request.h1Title#</h1>
                 </div>
                 <div class="container">
-                    <form class="form-horizontal" action="beer-edit.cfm" name="beerForm" 
-                          method="post">
+                    <form class="form-horizontal" action="beer-edit.cfm" name="beerForm" method="post">
                         <input id="beerId" name="beerId" type="hidden" value="#request.beerId#">
                         <div class="form-group">
                             <label for="beerName" class="col-sm-2 control-label">
                                 Name
                             </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="beerName" 
-                                       name="beerName" placeholder="Beer Name" 
-                                       value="#request.beerName#" required="required">
+                                <input type="text" class="form-control" id="beerName" name="beerName" placeholder="Beer Name" value="#request.beerName#" ="required">
                                 <span id="helpBlock" class="help-block">
                                     <p class="text-danger">Required</p>
                                 </span>
@@ -139,14 +122,11 @@
                                 Brewery
                             </label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="breweryId" name="breweryId" 
-                                        required="required">
-                                    <option value="0" 
-                                        <cfif request.breweryId EQ 0>selected="selected"</cfif>>
+                                <select class="form-control" id="breweryId" name="breweryId" required="required">
+                                    <option value="0" <cfif request.breweryId EQ 0>selected="selected"</cfif>>
                                         -Select a Brewery-</option>
                                     <cfloop query="getBreweries">
-                                        <option value="#getBreweries.id#" 
-                                            <cfif getBreweries.id EQ request.breweryId>selected="selected"</cfif>>
+                                        <option value="#getBreweries.id#" <cfif getBreweries.id EQ request.breweryId>selected="selected"</cfif>>
                                             #getBreweries.name#</option>
                                     </cfloop>
                                 </select>
@@ -157,14 +137,11 @@
                                 Style
                             </label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="beerType" name="beerType" 
-                                        required="required">
-                                    <option value="" 
-                                        <cfif request.beerType IS "">selected="selected"</cfif>>
+                                <select class="form-control" id="beerType" name="beerType" required="required">
+                                    <option value="" <cfif request.beerType IS "">selected="selected"</cfif>>
                                         -Select a Style-</option>
                                     <cfloop query="getTypes">
-                                        <option value="#getTypes.type#" 
-                                            <cfif request.beerType IS getTypes.type>selected="selected"</cfif>>
+                                        <option value="#getTypes.type#" <cfif request.beerType IS getTypes.type>selected="selected"</cfif>>
                                             #getTypes.type#</option>
                                     </cfloop>
                                 </select>
@@ -175,8 +152,7 @@
                                 ABV
                             </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="beerABV" name="beerABV"
-                                       placeholder="Alcohol Content" value="#request.beerABV#">
+                                <input type="text" class="form-control" id="beerABV" name="beerABV" placeholder="Alcohol Content" value="#request.beerABV#">
                             </div>
                         </div>
                         <div class="form-group">
@@ -184,16 +160,15 @@
                                 IBU
                             </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="beerIBU" name="beerIBU"
-                                       placeholder="Bitterness Units" value="#request.beerIBU#">
+                                <input type="text" class="form-control" id="beerIBU" name="beerIBU" placeholder="Bitterness Units" value="#request.beerIBU#">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group button-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary" name="Submit">
                                     Save
                                 </button>
-                                <button type="reset" class="btn btn-default" name="Reset">
+                                <button type="reset" class="btn btn-light" name="Reset">
                                     Reset
                                 </button>
                                 <a href="beer-list.cfm" class="btn btn-warning" role="button">
