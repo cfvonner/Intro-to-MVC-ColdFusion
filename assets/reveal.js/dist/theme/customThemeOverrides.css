@@ -1,0 +1,47 @@
+/**
+ * Theme overrides for custom theme based on League Gothic and Lato
+ */
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+:root {
+  --r-main-font-size: 36px;
+  --r-heading-text-transform: none;
+}
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal ul ul {
+  font-size: 0.9em;
+}
+
+.reveal ul ul ul {
+  font-size: 0.8em
+}
+
+
+.reveal .highlight-red-static {
+  color: #ff2c2d;
+}
+
+.reveal .highlight-green-static {
+  color: #17ff2e;
+}
+
+.reveal .highlight-blue-static {
+  color: #1b91ff;
+}
+
+/*********************************************
+ * FOOTER
+ *********************************************/
+.footer-left {
+  position: absolute;
+  bottom: 8px;
+  z-index: 32;
+  padding: 5px;
+  font-size: 0.6em;
+  opacity: 0.6;
+}

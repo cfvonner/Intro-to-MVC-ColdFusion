@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <title>Intro To MVC</title>
+        <title>Getting Started with MVC in ColdFusion using FW/1</title>
 
         <link rel="stylesheet" href="../assets/reveal.js/dist/reset.css">
         <link rel="stylesheet" href="../assets/reveal.js/dist/reveal.css">
-        <link rel="stylesheet" href="../assets/reveal.js/dist/theme/league-custom.css">
+        <link rel="stylesheet" href="../assets/reveal.js/dist/theme/league.css">
+        <link rel="stylesheet" href="../assets/reveal.js/dist/theme/customThemeOverrides.css">
 
         <!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="../assets/reveal.js/plugin/highlight/zenburn.css">
@@ -18,34 +19,39 @@
         <div id="hidden" style="display:none;">
             <div id="footer">
                 <div class="footer-left">
-                    Carl Von Stetten / <a href="https://twitter.com/cfvonner">@cfvonner</a>
+                    Carl Von Stetten / <a href="https://x.com/cfvonner" target="_blank">@cfvonner</a> / <a href="https://github.com/cfvonner/Intro-To-MVC-ColdFusion" target="_blank">https://github.com/cfvonner/Intro-To-MVC-ColdFusion</a>
                 </div>
             </div>
         </div>
         <div class="reveal">
             <div class="slides">
                 <section>
-                    <h2>Taking Application Design To The Next Level with MVC</h2>
-                    <h4>Carl Von Stetten / 
-                        <a href="https://twitter.com/cfvonner" target="blank">@cfvonner</a>
+                    <h2>Getting Started with MVC in ColdFusion using FW/1</h2>
+                    <h4>Carl Von Stetten /
+                        <a href="https://x.com/cfvonner" target="blank">@cfvonner</a>
                     </h4>
                 </section>
                 <section>
                     <h2>About Me</h2>
                     <ul>
-                        <li>Geographic Information Systems (GIS) Analyst for a water resources/reclamation agencyin in Northern California
+                        <li>Geographic Information Systems (GIS) Analyst for a water resources/reclamation agency in Northern California
                             <ul>
                                 <li>Working with ColdFusion since 2002 (CF 4.5)</li>
-                                <li>Lots of spatial and non-spatial data modeling, data management, intranet application development</li>
+                                <li>Lots of spatial and non-spatial data modeling, data management</li>
+                                <li>Intranet application development</li>
                             </ul>
                         </li>
                         <li>Tools I Use:
                             <ul>
-                                <li>Adobe ColdFusion, JavaScript (incl. jQuery &amp; Bootstrap), Microsoft SQL Server, Python, Esri ArcGIS Desktop and Server, Geocortex, Safe FME (spatial ETLs), etc…</li>
+                                <li>Adobe ColdFusion</li>
+                                <li>JavaScript (incl. Bootstrap)</li>
+                                <li>Microsoft SQL Server</li>
+                                <li>Python, especially ArcPy (Python library for ArcGIS)</li>
+                                <li>Esri ArcGIS Enterprise</li>
+                                <li>Safe FME (spatial ETLs)</li>
                             </ul>
                         </li>
-                        <li style="padding-bottom: 1 em;">Adobe Community Professional for ColdFusion</li>
-                        <li>Unreformed DIY remodeler</li>
+                        <li style="padding-bottom: 1 em;">Adobe Community Professional for ColdFusion <em>(if I re-certified yesterday)</em></li>
                         <li>Passionate about craft beer! (should become obvious in a few minutes)</li>
                     </ul>
                 </section>
@@ -61,7 +67,7 @@
                         </li>
                         <li class="fragment" style="padding-top: 1em;">Complete overhaul of intranet map portal starting spring 2016
                             <ul>
-                                <li>Rewrite CFML portion from scratch</li>
+                                <li>Rewrote CFML portion from scratch</li>
                                 <li>"We're going to do it right" = Go MVC</li>
                                 <li>Working prototype within 3 weeks</li>
                             </ul>
@@ -171,11 +177,12 @@
                             <li class="fragment">Usually leverage MVC framework
                                 <ul>
                                     <li>Rails (Ruby)</li>
-                                    <li>Django (Python)</li>
+                                    <li>Django / Flask (Python)</li>
                                     <li>ASP.Net MVC</li>
-                                    <li>Express/Sails (Node.js)</li>
-                                    <li>Laravel/CakePHP (PHP)</li>
-                                    <li>Spring (Java)</li>
+                                    <li>Express / Sails (Node.js)</li>
+                                    <li>Laravel / CakePHP (PHP)</li>
+                                    <li>Spring / Struts (Java)</li>
+                                    <li class="highlight-green-static">FW/1 / ColdBox (ColdFusion)</li>
                                 </ul>
                             </li>
                         </ul>
@@ -232,7 +239,7 @@
                     <h2>What is Framework-One (FW/1)</h2>
                     <ul>
                         <li>Created by Sean Corfield in 2009</li>
-                        <li>Version 4.1 recently released</li>
+                        <li>Latest release is version 4.3</li>
                         <li>Small, lightweight
                             <ul class="fragment">
                                 <li>MVC portion is one file, <em>one.cfc</em> (137KB)</li>
@@ -275,31 +282,19 @@
                             <li class="fragment" data-fragment-index="5">Validation</li>
                             <li class="fragment" data-fragment-index="6">Responds to requests from controllers</li>
                             <li class="fragment" data-fragment-index="7">Should not know anything about the framework <span class="highlight-green-static">(including controllers and views)</span>*</li>
-                            <li class="fragment" data-fragment-index="9">Not accessible from web browser</li>
+                            <li class="fragment" data-fragment-index="8">Not accessible from web browser</li>
                         </ul>
-                        <p class="fragment" data-fragment-index="8" style="font-size: 0.7em; text-align: left;">
+                        <p class="fragment" data-fragment-index="7" style="font-size: 0.7em; text-align: left;">
                             * Some exceptions: DI/IOC framework methods and helper modules loaded by DI/IOC.
                         </p>
                     </div>
                     <div style="float:right; width:47%;">
                         <img src="./images/MVC-model.png">
                     </div>
-                </section>
-                <section>
-                    <h2>Controller Layer</h2>
-                    <div style="float:left; width:47%;">
-                        <ul>
-                            <li>Controls the flow of the application</li>
-                            <li class="fragment">Examines each incoming request (URL/FORM scope variables or path)</li>
-                            <li class="fragment">Calls relevant business logic (model objects/components)</li>
-                            <li class="fragment">Places results from business logic into "RC" object for layouts/views</li>
-                            <li class="fragment" style="padding-top: 1em;">Minimal validation</li>
-                            <li class="fragment">Short controller functions</li>
-                        </ul>
-                    </div>
-                    <div style="float:right; width:47%;">
-                        <img src="./images/MVC-controller.png">
-                    </div>
+                    <aside class="notes">
+                        <p>To help explain these concepts better, let's use the analogy of a restaurant.</p>
+                        <p>In a restaurant, the kitchen is like the model layer. It handles all the food preparation and cooking, but it doesn't interact directly with the customers.</p>
+                    </aside>
                 </section>
                 <section>
                     <h2>View Layer</h2>
@@ -321,11 +316,33 @@
                     <div style="float:right; width:47%;">
                         <img src="./images/MVC-view.png">
                     </div>
+                    <aside class="notes">
+                        <p>In our restaurant analogy, the view layer is like the dining area where customers enjoy their meals. It's all about presentation and user experience, without any involvement in food preparation or order management.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>Controller Layer</h2>
+                    <div style="float:left; width:47%;">
+                        <ul>
+                            <li>Controls the flow of the application</li>
+                            <li class="fragment">Examines each incoming request (URL/FORM scope variables or path)</li>
+                            <li class="fragment">Calls relevant business logic (model objects/components)</li>
+                            <li class="fragment">Places results from business logic into "RC" object for layouts/views</li>
+                            <li class="fragment" style="padding-top: 1em;">Minimal validation</li>
+                            <li class="fragment">Short controller functions</li>
+                        </ul>
+                    </div>
+                    <div style="float:right; width:47%;">
+                        <img src="./images/MVC-controller.png">
+                    </div>
+                    <aside class="notes">
+                        <p>In our restaurant analogy, the controller layer is like the waitstaff. They take orders from customers, communicate those orders to the kitchen (model layer), and then deliver the prepared food back to the customers.</p>
+                    </aside>
                 </section>
                 <section>
                     <h2>What the heck is "RC"?</h2>
                     <ul>
-                        <li>RC struct = alias for request context</li>
+                        <li>RC struct = alias for "request context"</li>
                         <li class="fragment">Sort of another scope (like Application, Session, Request, etc.)</li>
                         <li class="fragment">Mechanism for passing data between framework, controller, and views</li>
                         <li class="fragment">FW/1 automatically populates RC with URL and Form variables</li>
@@ -335,18 +352,18 @@
                 <section>
                     <h2>Anatomy of a URL</h2>
                     <p>
-                        https://localhost/index.cfm?<span class="fragment highlight-green" data-fragment-index="1">action=</span><span class="fragment highlight-blue" data-fragment-index="1">section</span>.<span class="fragment highlight-red" data-fragment-index="1">item</span>&somevariables.foo
+                        https://localhost/index.cfm?<span class="fragment highlight-green" data-fragment-index="1">action=</span><span class="fragment highlight-blue" data-fragment-index="2">section</span>.<span class="fragment highlight-red" data-fragment-index="3">item</span><span class="fragment highlight-green" data-fragment-index="4">&amp;somevariable.foo</span>
                     </p>
                     <table>
-                        <tr class="fragment highlight-green-static" data-fragment-index="2">
-                            <td>action</td>
+                        <tr class="fragment highlight-green-static" data-fragment-index="1">
+                            <td style="vertical-align: top;">action</td>
                             <td>
                                 <ul>
                                     <li>FW/1 looks for this URL parameter to decide what to do</li>
                                 </ul>
                             </td>
                         </tr>
-                        <tr class="fragment highlight-blue-static" data-fragment-index="3">
+                        <tr class="fragment highlight-blue-static" data-fragment-index="2">
                             <td style="vertical-align: top;">section</td>
                             <td>
                                 <ul>
@@ -355,16 +372,71 @@
                                 </ul>
                             </td>
                         </tr>
-                        <tr class="fragment highlight-red-static" data-fragment-index="4">
+                        <tr class="fragment highlight-red-static" data-fragment-index="3">
                             <td style="vertical-align: top;">item</td>
                             <td>
                                 <ul>
                                     <li>Name of method (function) to call in /controllers/<em>section</em>.cfc</li>
-                                    <li>FW/1 will look for this view: /views/<em>section</em>/<em>item</em>.cfm</li>
+                                    <li>FW/1 will also look for this view: /views/<em>section</em>/<em>item</em>.cfm</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-green-static" data-fragment-index="4">
+                            <td style="vertical-align: top;">somevariable.foo</td>
+                            <td>
+                                <ul>
+                                    <li>Any additional key/value data you want to pass in the URL (you can define this using the FW/1 <code>BuildLink()</code> function)</li>
+                                    <li><code>somevariable</code> is the key, and <code>foo</code> is the value.</li>
                                 </ul>
                             </td>
                         </tr>
                     </table>
+                </section>
+                <section>
+                    <h2>SES-friendly URLs</h2>
+                    <p>If you set FW/1's <code>generateSES</code> and <code>SESOmitIndex</code>* properties to true, you can use SES-friendly URLs like this:</p>
+                    <br>
+                    <p>
+                        https://localhost/<span class="fragment highlight-blue" data-fragment-index="2">section</span>/<span class="fragment highlight-red" data-fragment-index="3">item</span>/<span class="fragment highlight-green" data-fragment-index="4">somevariables/foo</span>
+                    </p>
+                    <table>
+                        <tr class="fragment highlight-green-static" data-fragment-index="1">
+                            <td>action</td>
+                            <td>
+                                <ul>
+                                    <li>FW/1 doesn't need "action" to be explicitly stated in the URL.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-blue-static" data-fragment-index="2">
+                            <td style="vertical-align: top;">section</td>
+                            <td>
+                                <ul>
+                                    <li>Name of controller to call (/controllers/<em>section</em>.cfc)</li>
+                                    <li>If a <em>section</em>.cfm file is found in /layouts, it will be applied before the default layout.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-red-static" data-fragment-index="3">
+                            <td style="vertical-align: top;">item</td>
+                            <td>
+                                <ul>
+                                    <li>Name of method (function) to call in /controllers/<em>section</em>.cfc</li>
+                                    <li>FW/1 will also look for this view: /views/<em>section</em>/<em>item</em>.cfm</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="fragment highlight-green-static" data-fragment-index="4">
+                            <td style="vertical-align: top;">somevariable/foo</td>
+                            <td>
+                                <ul>
+                                    <li>Any additional key/value data you want to pass in the URL (you can define this using the FW/1 <code>BuildLink()</code> function)</li>
+                                    <li><code>somevariable</code> is the key, and <code>foo</code> is the value.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="font-size: 0.7em; text-align: left;">* You will need a URL rewrite rule in your web server configuration if you omit index.cfm from the URLs.</p>
                 </section>
                 <section>
                     <h2>What Does a FW/1 MVC App Look Like?</h2>
@@ -372,10 +444,10 @@
                 </section>
                 <section>
                     <h2>A Note About Dependency Injection (DI)</h2>
-                    <p>Depenency Injection simplifies managing dependencies</p>
+                    <p>Dependency Injection simplifies managing dependencies</p>
                     <div class="fragment" style="float:left; width:49%;">
                         <pre><code data-trim style="font-size:0.9em;">
-                            // This component depends on object "foo", which 
+                            // This component depends on object "foo", which
                             // depends on objects "bar" and "baz"
                             component {
                                 public myObject function init( ) {
@@ -399,7 +471,7 @@
                     </div>
                     <div class="fragment" style="float:right; width:49%;">
                         <pre><code data-trim style="font-size:0.9em;">
-                            // This component depends on object "foo", which 
+                            // This component depends on object "foo", which
                             // depends on objects "bar" and "baz"
                             component {
                                 property fooService;
@@ -435,7 +507,7 @@
                     <div class="fragment" style="float:right; width:47%;">
                         <h3>Cons</h3>
                         <ul>
-                            <li>Have to learn some new concepts, even if already an excellen procedural programmer</li>
+                            <li>Have to learn some new concepts, even if already an excellent procedural programmer</li>
                             <li>Might seem to end up with more files to manage
                                 <ul>
                                     <li>But each file will be more focused and on-point</li>
@@ -455,6 +527,7 @@
                                     <ul>
                                         <li>Move business logic into "fat controllers"</li>
                                         <li>Move display code into layouts or layouts and views</li>
+                                        <li>Move business logic into the model and have "think controllers"</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -496,7 +569,7 @@
                                         <ul>
                                             <li>Docs/Download: <a href="https://www.coldbox.org">https://www.coldbox.org</a></li>
                                             <li>
-                                                CommandBox installation: <pre><code>box coldbox create app myApp</code></pre>
+                                                CommandBox installation: <pre><code>coldbox create app myApp</code></pre>
                                             </li>
                                         </ul>
                                     </li>
@@ -509,12 +582,12 @@
                             <li>Discussion Groups
                                 <ul>
                                     <li><a href="https://groups.google.com/forum/#!forum/framework-one">Framework-One Google Group</a></li>
-                                    <li><a href="https://groups.google.com/forum/#!forum/coldbox">ColdBox Google Group</a></li>
+                                    <li><a href="https://community.ortussolutions.com/c/communities/coldbox/13">ColdBox Community</a></li>
                                 </ul>
                             </li>
                             <li style="padding-top: 1em;">Real-Time Assistance
                                 <ul>
-                                    <li><a href="http://cfml-slack.herokuapp.com/">CFML Slack Team</a>
+                                    <li><a href="http://cfml-slack.net/">CFML Slack Team</a>
                                         <ul>
                                             <li>FW/1 Channel</li>
                                             <li>Box-Products Channel</li>
@@ -532,18 +605,18 @@
                             <li>Contact Me:
                                 <ul>
                                     <li>Email: <a href="mailto:carl.vonstetten1@gmail.com">carl.vonstetten1@gmail.com</a></li>
-                                    <li>Twitter: <a href="https://twitter.com/cfvonner">@cfvonner</a></li>
-                                    <li>GitHub: <a href="https://github.com/cfvonner">cfvonner</a></li>
+                                    <li>X (formerly Twitter): <a href="https://x.com/cfvonner">@cfvonner</a></li>
+                                    <li>GitHub: <a href="https://github.com/cfvonner">@cfvonner</a></li>
                                     <li>CFML Team on Slack: <a href="http://cfml-slack.net/">@cfvonner</a></li>
                                 </ul>
                             </li>
                             <li style="padding-top: 2em;">
-                                Code/Slides: <a href="https://github.com/cfvonner/Intro-To-MVC-ColdFusion">https://github.com/cfvonner/Intro-To-MVC-ColdFusion</a>
+                                Code/Slides: <a href="https://github.com/cfvonner/Intro-To-MVC-ColdFusion" target="_blank">https://github.com/cfvonner/Intro-To-MVC-ColdFusion</a>
                             </li>
                         </ul>
                     </div>
                     <div style="float:right; width:47%;">
-                        <img src="./images/confusedpanda-300px.png" width="400px">   
+                        <img src="./images/confusedpanda-300px.png" width="400px">
                     </div>
                 </section>
             </div>
@@ -566,25 +639,27 @@
                 minScale: 1,
                 maxScale: 1,
                 hash: true,
-                slideNumber: true
+                slideNumber: true,
+                showNotes: false,
+                totalTime: 60 * 40
             });
 
             Reveal.configure({
                 pdfMaxPagesPerSlide: 1,
-                pdfSeparateFragments: false
+                pdfSeparateFragments: false,
             });
 
             var footer = document.getElementById( 'footer' ).children[0];
             console.log( footer );
             if ( window.location.search.match( /print-pdf/gi ) ) {
                 Reveal.on( 'ready', function( event ) {
-                    document.querySelectorAll( '.slide-background').forEach( function( el ) {
+                    document.querySelectorAll( '.slide-background' ).forEach( function( el ) {
                         el.append( footer.cloneNode( true ) );
                     });
                 });
             }
             else {
-                document.querySelector( 'div.reveal').append( footer )
+                document.querySelector( 'div.reveal' ).append( footer )
             }
         </script>
     </body>
