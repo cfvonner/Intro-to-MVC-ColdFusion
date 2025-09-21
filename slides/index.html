@@ -41,6 +41,13 @@
                                 <li>Intranet application development</li>
                             </ul>
                         </li>
+                        <li>Love the outdoors (camping/hiking/paddleboarding/kayaking)</li>
+                        <li>Passionate about craft beer! (should become obvious in a few minutes)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>My Tech Stack</h2>
+                    <ul>
                         <li>Tools I Use:
                             <ul>
                                 <li>Adobe ColdFusion</li>
@@ -51,8 +58,7 @@
                                 <li>Safe FME (spatial ETLs)</li>
                             </ul>
                         </li>
-                        <li style="padding-bottom: 1 em;">Adobe Community Professional for ColdFusion <em>(if I re-certified yesterday)</em></li>
-                        <li>Passionate about craft beer! (should become obvious in a few minutes)</li>
+                        <li style="padding-bottom: 1 em;">Adobe Certified Professional for Adobe ColdFusion</li>
                     </ul>
                 </section>
                 <section>
@@ -104,10 +110,10 @@
                                 <li>How are they structured?</li>
                                 <li>How do I use them
                                     <ul>
-                                        <li>CreateObject()</li>
                                         <li>New </li>
-                                        <li>CFInvoke</li>
-                                        <li>CFObject</li>
+                                        <li>createObject()</li>
+                                        <li><CFInvoke> / cfinvoke()</li>
+                                        <li><CFObject> / cfobject()</li>
                                     </ul>
                                 </li>
                                 <li>ColdFusion request cycle</li>
@@ -161,9 +167,6 @@
                     <ul>
                         <li>YES!</li>
                         <li class="fragment" style="padding-top: 1em;">MVC
-                            <ul class="fragment">
-                                <li class="highlight-green-static">(You knew I was going to say that)</li>
-                            </ul>
                         </li>
                     </ul>
                 </section>
@@ -219,7 +222,7 @@
                         </li>
                         <div class="fragment fade-out" data-fragment-index="2">
                             <li>ColdBox</li>
-                            <li>CFWheels
+                            <li>Wheels (formerly CFWheels)
                                 <ul>
                                     <li>Follows Ruby on Rails paradigm</li>
                                 </ul>
@@ -242,7 +245,7 @@
                         <li>Latest release is version 4.3</li>
                         <li>Small, lightweight
                             <ul class="fragment">
-                                <li>MVC portion is one file, <em>one.cfc</em> (137KB)</li>
+                                <li>MVC portion is one file, <em>one.cfc</em> (140KB)</li>
                                 <li class="fragment">Two related files:
                                     <ul>
                                         <li><em>ioc.cfc</em> - (aka DI/1) Dependency Injection/Inversion of Control</li>
@@ -327,7 +330,7 @@
                             <li>Controls the flow of the application</li>
                             <li class="fragment">Examines each incoming request (URL/FORM scope variables or path)</li>
                             <li class="fragment">Calls relevant business logic (model objects/components)</li>
-                            <li class="fragment">Places results from business logic into "RC" object for layouts/views</li>
+                            <li class="fragment">Places results from business logic into "RC" scope for layouts/views</li>
                             <li class="fragment" style="padding-top: 1em;">Minimal validation</li>
                             <li class="fragment">Short controller functions</li>
                         </ul>
@@ -345,7 +348,7 @@
                         <li>RC struct = alias for "request context"</li>
                         <li class="fragment">Sort of another scope (like Application, Session, Request, etc.)</li>
                         <li class="fragment">Mechanism for passing data between framework, controller, and views</li>
-                        <li class="fragment">FW/1 automatically populates RC with URL and Form variables</li>
+                        <li class="fragment">FW/1 automatically populates RC with URL and Form variables or path variables (SES URLs)</li>
                         <li class="fragment">Write controller methods to insert anything else your layouts/views need</li>
                     </ul>
                 </section>
@@ -441,6 +444,12 @@
                 <section>
                     <h2>What Does a FW/1 MVC App Look Like?</h2>
                     <img src="./images/talkischeapshowmethecode.jpg">
+                    <aside class="notes">
+                        <p>Let's look at the FW/1 MVC version of the application that manages a list of beers.</p>
+                        <p>We'll walk through the code for the model, view, and controller layers to see how they interact with each other.</p>
+                        <br>
+                        <p>How easy is it to start a FW/1 MVC application?</p>
+                    </aside>
                 </section>
                 <section>
                     <h2>A Note About Dependency Injection (DI)</h2>
@@ -527,7 +536,7 @@
                                     <ul>
                                         <li>Move business logic into "fat controllers"</li>
                                         <li>Move display code into layouts or layouts and views</li>
-                                        <li>Move business logic into the model and have "think controllers"</li>
+                                        <li>Move business logic into the model and have "thin controllers"</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -597,6 +606,16 @@
                             </li>
                         </ul>
                     </div>
+                </section>
+                <section>
+                    <h2><img src="./images/Breaking-news-png-transparent-image.webp" width="50%"></h2>
+                    <ul>
+                        <li class="fragment">FW/1 project has been forked to <a href="https://github.com/MarkRTakata/CFMVC">CFMVC!</a></li>
+                        <li class="fragment">New project stewards: Mark Takata, Brian Sappey, Ben Nadel</li>
+                        <li class="fragment">Other CF community members will be contributors, along with some Adobe CF engineers</li>
+                        <li class="fragment">Potential improvements to the developer experience</li>
+                        <li class="fragment">Stay tuned - more information coming soon</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Thank You!!!</h2>
